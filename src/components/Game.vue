@@ -1,24 +1,59 @@
 <template>
     <div id="game">
-        <button @click="nextPage()">המשך</button>
+        <span v-if="showInstruction">
+            <div class="instruction"> לחץ על כל תלמיד שאותו </div>
+            <button @click="gameOrInstruction">למשחק</button>
+        </span>
+        <div  v-if="!showInstruction" @click="gameOrInstruction" class="toInstruction">להוראות</div>
+        <span class="pupils">
+            <div  @click="goQuestion(index)" :key="index" v-for="(value, index) in arr" class="pupil"></div>
+        </span>
+        <div class="question" v-if="showQuestion && arr[numOuestion] === 1">
+            <ul> {{close1[numOuestionClose].question}}
+                <!-- <li>{{close1[numOuestionClose].question}}</li> -->
+                <li @click="checkAnswer(1)">{{close1[numOuestionClose].answer1}}</li>
+                <li @click="checkAnswer(2)">{{close1[numOuestionClose].answer2}}</li>
+                <li @click="checkAnswer(3)">{{close1[numOuestionClose].answer3}}</li>
+            </ul>
+            <p v-show="isTrueAnswer">כל הכבוד, תשובה נכונה</p>
+            <p v-show="!isTrueAnswer && numTry > 0">נסה שוב</p>
+        </div>
+        <div class="question" v-if="showQuestion && arr[numOuestion] === 2">
+            <p>{{open1[numOuestionOpen].question}}</p>
+            <input v-if="showQuestion" type="" v-model="answer">
+            <button  @click="checkAnswer(4)">בדוק אותי</button>
+            <p v-show="isTrueAnswer">כל הכבוד, תשובה נכונה</p>
+            <p v-show="!isTrueAnswer && numTry === 1">נסה שוב</p>
+            <p v-show="!isTrueAnswer && numTry === 2">התשובה הנכונה היא: {{open1[numOuestionOpen].trueAnswer}}</p>
+        </div>
     </div>
+    <!-- <button @click="nextPage()">המשך</button>      -->
 </template>
 
 <script>
 export default {
   name: "game",
+  props:["numLogin"],
   data() {
     return {
-        firstOpen:[{
+        open1:[{
                 question: `לאיזה שני סוגים מתייחסת התגובה "שיקוף" ?`,
                 trueAnswer:"מילולי והשלכות"
             },
             {
-                question: "",
-                trueAnswer:""
+                question: `במהלך שיעור העיר מדריך לחניכים: "אתם לא מפסיקים לדבר בניכםמתחילת השיעור". באיזה תגובה השתמש במדריך ?`,
+                trueAnswer:"שיקוף מילולי"
+            },
+            {
+                question: " במהלך שיעור מדריך העיר מספר פעמים לחניך עד שהחליט להוציא אותו מהכיתה.  החניך התווכח, ביקש הזדמנות נוספת והבטיח שלא יפריע יותר למהלך השיעור .המדריך השתכנע ובחר להשאיר אותו בכיתה, על איזה עקרון לא שמר המשריך?",
+                trueAnswer:"החלטיות"
+            },
+            {
+                question: "במהלך שיעור שני תלמידים שיחקו בטלפון. כאשר ליאור שיחק המדריך ביקש ממנו להפסיק לשחק אך כאשר רועי שיחק, המדריך הוציא אותו מהכיתה. איזה עקרון לא התממש בבחירת התגובה של המדריך?",
+                trueAnswer:"אחידות ועקביות",
             }
         ],
-        firstClose:[
+        close1:[
             {
                 question: "מהי הפרעה ממשית?",
                 answer1:" התנהגות שפוגעת בתהליך הלמידה- בחניך או סביבתו",
@@ -27,9 +62,9 @@ export default {
             },
             {
                 question: "נשתמש בתגובה של מבט כתגובה להפרעה",
-                answer1:"קלה",
+                answer1:"בינונית",
                 answer2:"קשה",
-                answer3:"בינונית"
+                answer3:"קלה"
             },
             {
                 question: "מדריך נכנס לכיתה ושם לב שמרבית החניכים מתעסקים בנייד שלהם.לכן, החליט לרכז את כלל הניידים בקופסא ולהחזירם בסוף השיעור.באיזו תגובה פעל המדריך?",
@@ -39,42 +74,117 @@ export default {
             },
             {
                 question: "לפני שיעור חניך משתף אותך בכך שהוא לא מרגיש שהחומר רלוונטי אליו ולכן אין סיבה שיהיה נוכח בשיעור. איזו תגובה הכי מתאימה בסיטואציה זו?",
-                answer1:"קרבה פיזית",
-                answer2:"שתיקה",
+                answer1:"שתיקה ",
+                answer2:"קרבה פיזית",
                 answer3:"סילוק ידידותי"
+            },
+            {
+                question: "על איזה עקרון עלייך לשמור כדי למנוע איבוד אפקטיביות של תגובה ופיתוח חסינות אליה אצל חניכים?",
+                answer1:"התאמה",
+                answer2:"הדרגתיות",
+                answer3:"גיוון"
+            },
+            {
+                question: "חניך התנהג בצורה מופתית לאורך כל השיעור אך לפתע התנהג באלימות כלפי חניך אחר. על איזה עקרון נוותר במקרה זה?",
+                answer1:"רגישות",
+                answer2:"הדרגתיות",
+                answer3:"החלטיות" 
             }
         ],
-        secondOpen: 
-            {
-                question: "",
-                trueAnswer:""
-            },
-        secondClose: [
-            {
-                question: "",
-                trueAnswer:"",
-                answer1:"",
-                answer2:""
-            },
-            {
-                question: "",
-                trueAnswer:"",
-                answer1:"",
-                answer2:""
-            },
-            {
-                question: "",
-                trueAnswer:"",
-                answer1:"",
-                answer2:""
-            }
-        ],
-        numLogin: 1,
+        answer: "",
+        arr: [1,1,2,1,2,1,1,2,1,2],
+        showQuestion: false,
+        numOuestion: 0 ,
+        numOuestionOpen: 0,
+        numOuestionClose: 0,
+        trueAnswer: [1,3,1,2,3,2],
+        numberTrueAnswer: 0,
+        showInstruction: true,
+        isTrueAnswer: false,
+        numTry: 0,
+        arrSuccesses:[]
     }
   },
+  mounted () {
+    if (this.numLogin === 2){
+        this.numOuestion +=6;
+        this.numOuestionOpen +=2;
+        this.numOuestionClose +=4;
+        this.numberTrueAnswer +=6;
+    }
+  },
+
   methods: {
-    nextPage() {
-        this.$emit(`nextPage`,5);
+    gameOrInstruction() {
+        this.showInstruction = !this.showInstruction;
+    },
+    goQuestion(x) {
+        console.log(x);
+        let xInArr = false;
+        for (let i = 0; i<= this.arrSuccesses.lenght; i++) {
+            console.log(this.arrSuccesses[i]);
+            if (this.arrSuccesses[i] === x){
+                xInArr = true;
+            }
+        }
+        if(this.showQuestion === false && !xInArr){
+            this.numOuestion +=1;
+            this.showQuestion = true;
+        }
+
+    },
+    checkAnswer(number) {
+        if(number===4){
+            if(this.answer === this.open1[this.numOuestionOpen].trueAnswer) {
+                this.isTrueAnswer = true;
+                setTimeout(() => {
+                    this.arrSuccesses.pop(this.numOuestion);
+                    this.isTrueAnswer = false;
+                    this.showQuestion = false;
+                    this.numberTrueAnswer++;
+                    this.numOuestionOpen +=1;
+                    this.answer = "";
+                }, 1500);
+            }
+            else {
+                if(this.numTry === 0) {
+                    this.numTry++;
+                    this.answer = "";
+                    console.log(this.numTry, this.isTrueAnswer)
+                }
+                else {
+                    this.numTry++;
+                setTimeout(() => {
+                    this.arrSuccesses.pop(this.numOuestion);
+                    this.isTrueAnswer = false;
+                    this.showQuestion = false;
+                    this.numberTrueAnswer++;
+                    this.numOuestionOpen +=1;
+                    this.answer = "";
+                    this.numTry = 0;
+                }, 1500);
+                }
+            }
+        }
+        else if(number === this.trueAnswer[this.numOuestionClose]) {
+            this.isTrueAnswer = true;
+            setTimeout(() => {
+                this.isTrueAnswer = false;
+                this.showQuestion = false;
+                this.numberTrueAnswer++;
+                this.numOuestionClose +=1;
+                this.numTry = 0;
+            }, 1500);
+        }
+        else {
+            this.numTry++;
+        }
+        if (this.numberTrueAnswer === 6){
+            this.$emit(`nextPage`,5);
+        }
+        else if(this.numberTrueAnswer === 9) {
+            this.$emit(`nextPage`,6);
+        }
     }
   }
 }
@@ -82,4 +192,51 @@ export default {
 
 
 <style scoped>
+.toInstruction{
+    margin-top: 0vh;
+    margin-right: 2vw;
+}
+.instruction {
+    width: 98vw;
+    height: 97vh;
+    background-color: white;
+    opacity: 70%;
+}
+.question {
+    margin-top: 25vh;
+    width: 40vw;
+    height: 20vw;
+    background-color: black;
+    margin-bottom: -88vh;
+    margin-left: 25vw;
+    border-radius: 5%;
+    color: white;
+}
+.pupil {
+    width: 10vw;
+    height: 15vw;
+    background-color: black;
+    border-radius: 5%;
+    cursor: pointer;
+    padding: 3px;
+    position: relative;
+    margin-left: 5vw;
+}
+
+.pupils {
+    position: absolute;
+    top: 25vh;
+    left: 6vw;
+    display: flex;
+    width: 80vw;
+    height: 70vh;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    z-index: -1;
+}
+
+button {
+    position: absolute;
+    top: 25vh;
+}
 </style>

@@ -1,19 +1,34 @@
 <template>
   <div id="typeBehavior">
-    <span v-if="!showContent">
-            <div>סוגי ההתנהגות של הלומדים,נלמד באמצעות משחק הזיכרון
-            </div>
-            <button @click="startLearn()" > למד אותי </button>
-        </span>
-    <span v-if="showContent">
-    <div @click="checkAnswer(1, 0)" :class="cardClass[0]"></div>
-    <div @click="checkAnswer(3, 5)" :class="cardClass[5]"></div>
-    <div @click="checkAnswer(1, 1)" :class="cardClass[1]"></div>
-    <div @click="checkAnswer(2, 2)" :class="cardClass[2]"></div>
-    <div @click="checkAnswer(4, 7)" :class="cardClass[7]"></div>
-    <div @click="checkAnswer(2, 3)" :class="cardClass[3]"></div>
-    <div @click="checkAnswer(4, 6)" :class="cardClass[6]"></div>
-    <div @click="checkAnswer(3, 4)" :class="cardClass[4]"></div>
+    <span class="typewriter"  v-if="!showContent">
+      <h1>סוגי ההתנהגות של הלומדים,נלמד באמצעות משחק הזיכרון </h1>
+      <button @click="startLearn()" > למד אותי </button>
+    </span>
+    <span class="cards" v-if="showContent">
+      <div @click="checkAnswer(1, 0)" class="container" :class="cardClass[0]">
+        <div>התנהגות אידיאלית</div>
+      </div>
+      <div @click="checkAnswer(3, 5)" class="container" :class="cardClass[5]">
+      <div>התנהגות חריגה לגיטימית</div>
+      </div>
+      <div @click="checkAnswer(1, 1)" class="container" :class="cardClass[1]">
+      <div>התנהגות מופתית, בהתאם לציפיות ודרישות המדדריך</div>
+      </div>
+      <div @click="checkAnswer(2, 2)" class="container" :class="cardClass[2]">
+      <div>הפרעה ממשית</div>
+      </div>
+      <div @click="checkAnswer(4, 7)" class="container" :class="cardClass[7]">
+      <div>התנהגות מכוונת שפוגעת בתהליך הלמידה ונובעת מסיבותיו האישיות של החניך (מוטיבציה, אופי, תקשורת וכו')</div>
+      </div>
+      <div @click="checkAnswer(2, 3)" class="container" :class="cardClass[3]">
+      <div>התנהגות שפוגעת בתהליך הלמידה (בחניך או בסביבתו)</div>
+      </div>
+      <div @click="checkAnswer(4, 6)" class="container" :class="cardClass[6]">
+      <div>התנגדות</div>
+      </div>
+      <div @click="checkAnswer(3, 4)" class="container" :class="cardClass[4]">
+      <div>התנהגות שאינה פוגעת בתהליך הלמידה</div>
+      </div>
   </span>
   <button @click="nextPage()" v-if="corrrectAnswer === 4 "> המשך </button>
   </div>
@@ -69,6 +84,35 @@ export default {
 
 
 <style scoped>
+/* body {
+  direction: rtl;
+} */
+
+.typewriter h1 {
+  direction: rtl;
+  color: black;
+  font-family: monospace;
+  overflow: hidden; 
+  border-left: .15em solid; 
+  white-space: nowrap; 
+  /* margin: 0 auto; */
+  letter-spacing: .15em; 
+  animation: 
+    typing 3.5s steps(30, end),
+    blink-caret .5s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 30% }
+}
+
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: black }
+}
 .card {
   width: 10vw;
   height: 15vw;
@@ -77,10 +121,20 @@ export default {
   cursor: pointer;
   padding: 3px;
   position: relative;
+  color: white;
+
+  
 
 }
+.container{
+  display: flex;
+  direction: rtl;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 
-span {
+}
+.cards {
   margin-top: 15vh;
   margin-left: 25vw;
   display: flex;

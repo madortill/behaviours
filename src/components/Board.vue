@@ -18,7 +18,6 @@ import HowToUse from './HowToUse.vue'
 import Comments from './Comments.vue'
 export default {
     components: {TypeBehavior,HowToUse,Comments},
-    props: ['rightAns'],
     name: "board",
     data() {
       return {

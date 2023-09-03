@@ -6,16 +6,16 @@
       </span>
       <span  v-if="showContent" class="bigContainer">
           <section class="container"> 
-              <figure v-for="i in arrText1" class="img-stack">
-                  <div>{{ arrText1[i] }}</div>
-                  <figcaption class="img-stack__caption">Waterfall in Dundas Peak, Ontario, Canada </figcaption>
+              <figure v-for="(value, index) in arrText1" class="img-stack">
+                <figcaption class="title">{{ titles1[index] }}</figcaption>
+                  <figcaption class="text">{{ value }}</figcaption>
               </figure>
           </section>
           <section class="container"> 
-              <figure v-for="i in arrText2" class="img-stack">
-                  <div>{{ arrText2[i] }}</div>
-                  <figcaption class="img-stack__caption">Waterfall in Dundas Peak, Ontario, Canada </figcaption>
-              </figure> 
+              <figure v-for="(value, index) in arrText2" :key="i" class="img-stack">
+                  <figcaption class="title">{{ titles2[index] }}</figcaption>
+                  <figcaption class="text">{{ value }}</figcaption>
+              </figure>
           </section>
       </span>
       <button @click="nextPage()"> המשך </button>
@@ -28,8 +28,10 @@
     name: "howToUse",
     data() {
       return {
-        arrText1: ["","",""],
-        arrText2: ["","",""],
+        titles1: ["הדרגתיות","החלטיות","רגישות"],
+        titles2: ["גיוון","אחידות ועקביות","התאמה"],
+        arrText1: ["עלינו להתקדם במעלה החומרה של תגובתינו","ברגע שהחלטנו ע דרך פעולהת אין לפתוח זאת לדיון ולמיקוח","לא נעליב את החניך ונגלה רגישות למצב הכיתה ולצרכיה"],
+        arrText2: ["ננסה לגוון את התגובות שלנו","נשתדל להגיב באותה מידה כלפי אותה התנהגות","יש להפעיל שיקול דעת בבחירת התגובה ולשים לב "],
         showContent: false
       }
     },
@@ -63,8 +65,6 @@ BODY {
   color: inherit;
 }
 
-IMG { max-width: 100%; }
-
 .bigContainer {
     display: flex;
 }
@@ -77,9 +77,8 @@ IMG { max-width: 100%; }
   justify-content: center;
   min-height: 27em;
   border: 1px solid rgba(0, 0, 0, .1);
+  direction: rtl;
 }
-
-/*Actual Style*/
 
 .img-stack {
   position: absolute;
@@ -92,18 +91,6 @@ IMG { max-width: 100%; }
   transition: transform .5s ease-out;
 }
 
-.img-stack__image {
-  max-width: 500px;
-}
-
-.img-stack:first-child {
-  transform: rotate(1deg);
-}
-
-.img-stack:last-child {
-  transform: rotate(-1deg);
-}
-
 .container:hover .img-stack:first-child {
   transform: rotate(19deg);
 }
@@ -112,8 +99,8 @@ IMG { max-width: 100%; }
   transform: rotate(-19deg);
 }
 
-.img-stack:hover {
-  z-index: 1;
+.title{
+  border-bottom: #3a3d40;
+  font-size: 2vh;
 }
-
   </style>

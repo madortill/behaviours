@@ -5,16 +5,22 @@
         <div v-if="start" class="startText">
           <button @click="changePage(2)" >המשך</button>
         </div>
-    </span>
+      </span>
     <!-- <board v-if="numPage === 2"></board> -->
-    <Game @nextPage="changePage" v-if="numPage === 4"></Game>
+    <!-- <mainScreen :numLogin="numLogin" @nextPage="changePage" v-if="numPage === 1" ></mainScreen> -->
+    <Game :numLogin="numLogin" @nextPage="changePage" v-if="numPage === 4"></Game>
     <typeBehavior @nextPage="changePage" v-if="numPage === 2" ></typeBehavior>
     <comments @nextPage="changePage" v-if="numPage === 3"></comments>
     <howToUse @nextPage="changePage" v-if="numPage === 5"></howToUse>
     </div>
+    <div v-if="numPage === 6" class="start">
+      <div> כל הכבוד כל התלמידים מרוכזים ומחכים שתעביר את החומר, עכשיו הכל תלוי בך. בהצלחה!</div>
+      <button @click="changePage(1)">בא לי שוב</button>
+    </div>
 </template>
 
 <script>
+// import MainScreen from './components/MainScreen.vue'
 import TypeBehavior from './components/TypeBehavior.vue'
 import HowToUse from './components/HowToUse.vue'
 import Comments from './components/Comments.vue'
@@ -25,7 +31,8 @@ export default {
   data() {
     return {
       start: false,
-      numPage: 1
+      numPage: 4,
+      numLogin: 1
     }
   },
   mounted () {
@@ -35,8 +42,10 @@ export default {
   },
   methods: {
     changePage(numPage) {
+      if (numPage === 4 && this.numPage === 5){
+        this.numLogin = 2;
+      }
       this.numPage = numPage;
-      console.log(this.numPage);
     }
   }
 }
@@ -46,8 +55,8 @@ export default {
 <style scoped>
 
 .black{
-  width: 100vw;
-  height: 100vh;
+  width: 98vw;
+  height: 97vh;
   background-color: black;
   animation: openscreen 2s  forwards;
 }
