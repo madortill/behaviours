@@ -27,13 +27,13 @@
             <p v-show="!isTrueAnswer && numTry === 2">התשובה הנכונה היא: {{open1[numOuestionOpen].trueAnswer}}</p>
         </div>
     </div>
-    <!-- <button @click="nextPage()">המשך</button>      -->
+    <!-- <button @click="nextPage()">המשך</button>-->
 </template>
 
 <script>
 export default {
   name: "game",
-  props:["numLogin"],
+  props:["numLogin","successes"],
   data() {
     return {
         open1:[{
@@ -41,7 +41,7 @@ export default {
                 trueAnswer:"מילולי והשלכות"
             },
             {
-                question: `במהלך שיעור העיר מדריך לחניכים: "אתם לא מפסיקים לדבר בניכםמתחילת השיעור". באיזה תגובה השתמש במדריך ?`,
+                question: `במהלך שיעור העיר מדריך לחניכים: "אתם לא מפסיקים לדבר בניכם מתחילת השיעור". באיזה תגובה השתמש במדריך ?`,
                 trueAnswer:"שיקוף מילולי"
             },
             {
@@ -102,15 +102,17 @@ export default {
         showInstruction: true,
         isTrueAnswer: false,
         numTry: 0,
-        arrSuccesses:[]
+        arrSuccesses:[],
+        numberAnswer: 0
     }
   },
   mounted () {
     if (this.numLogin === 2){
-        this.numOuestion +=6;
+        // this.numOuestion +=6;
         this.numOuestionOpen +=2;
         this.numOuestionClose +=4;
         this.numberTrueAnswer +=6;
+        this.arrSuccesses = this.successes;
     }
   },
 
@@ -119,11 +121,13 @@ export default {
         this.showInstruction = !this.showInstruction;
     },
     goQuestion(x) {
-        console.log(x);
+        // console.log(x);
+        this.numberAnswer = x;
         let xInArr = false;
-        for (let i = 0; i<= this.arrSuccesses.lenght; i++) {
+        for (let i = 0; i < this.arrSuccesses.length; i++) { 
             console.log(this.arrSuccesses[i]);
             if (this.arrSuccesses[i] === x){
+                // console.log(this.arrSuccesses[i]);
                 xInArr = true;
             }
         }
@@ -138,7 +142,8 @@ export default {
             if(this.answer === this.open1[this.numOuestionOpen].trueAnswer) {
                 this.isTrueAnswer = true;
                 setTimeout(() => {
-                    this.arrSuccesses.pop(this.numOuestion);
+                    this.arrSuccesses[this.numberTrueAnswer] = this.numberAnswer;
+                    console.log(this.arrSuccesses);
                     this.isTrueAnswer = false;
                     this.showQuestion = false;
                     this.numberTrueAnswer++;
@@ -150,12 +155,11 @@ export default {
                 if(this.numTry === 0) {
                     this.numTry++;
                     this.answer = "";
-                    console.log(this.numTry, this.isTrueAnswer)
+                    // console.log(this.numTry, this.isTrueAnswer)
                 }
                 else {
                     this.numTry++;
                 setTimeout(() => {
-                    this.arrSuccesses.pop(this.numOuestion);
                     this.isTrueAnswer = false;
                     this.showQuestion = false;
                     this.numberTrueAnswer++;
@@ -169,6 +173,8 @@ export default {
         else if(number === this.trueAnswer[this.numOuestionClose]) {
             this.isTrueAnswer = true;
             setTimeout(() => {
+                this.arrSuccesses[this.numberTrueAnswer] = this.numberAnswer;
+                console.log(this.arrSuccesses);
                 this.isTrueAnswer = false;
                 this.showQuestion = false;
                 this.numberTrueAnswer++;
@@ -179,8 +185,9 @@ export default {
         else {
             this.numTry++;
         }
-        if (this.numberTrueAnswer === 6){
+        if (this.numberTrueAnswer === 5){
             this.$emit(`nextPage`,5);
+            this.$emit(`saveArr`,this.arrSuccesses)
         }
         else if(this.numberTrueAnswer === 9) {
             this.$emit(`nextPage`,6);

@@ -1,9 +1,10 @@
 <template>
     <div id="howToUse">
-      <span v-if="!showContent">
+      <!-- <span v-if="!showContent">
             <div>עקרונות לבחירה ושימוש בתגובה</div>
             <button @click="startLearn()" > למד אותי </button>
-      </span>
+      </span> -->
+      <animationType v-if="!showContent" @startLearn="startLearn()" :numText="2"></animationType>
       <span  v-if="showContent" class="bigContainer">
           <section class="container"> 
               <figure v-for="(value, index) in arrText1" class="img-stack">
@@ -18,14 +19,16 @@
               </figure>
           </section>
       </span>
-      <button @click="nextPage()"> המשך </button>
+      <button v-if="showContent" @click="nextPage()"> המשך </button>
     </div>
   </template>
 
   <script>
+  import AnimationType from './AnimationType.vue'
   export default {
     props: ['rightAns'],
     name: "howToUse",
+    components: {AnimationType},
     data() {
       return {
         titles1: ["הדרגתיות","החלטיות","רגישות"],
@@ -49,7 +52,7 @@
   
   <style scoped>
 
-HTML {
+/* HTML {
   font-family: "Libre Baskerville", "Open Sans", sans-serif, serif;
   font-size: 100%;
   line-height: 1.5;
@@ -58,7 +61,7 @@ HTML {
 
 BODY {
   color: #3a3d40;
-}
+} */
 
 *, *::before, *::after {
   box-sizing: inherit;

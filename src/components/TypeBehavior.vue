@@ -1,9 +1,10 @@
 <template>
   <div id="typeBehavior">
-    <span class="typewriter"  v-if="!showContent">
+    <!-- <span class="typewriter"  v-if="!showContent">
       <h1>סוגי ההתנהגות של הלומדים,נלמד באמצעות משחק הזיכרון </h1>
       <button @click="startLearn()" > למד אותי </button>
-    </span>
+    </span> -->
+    <animationType v-if="!showContent" @startLearn="startLearn()" :numText="0"></animationType>
     <span class="cards" v-if="showContent">
       <div @click="checkAnswer(1, 0)" class="container" :class="cardClass[0]">
         <div>התנהגות אידיאלית</div>
@@ -30,14 +31,16 @@
       <div>התנהגות שאינה פוגעת בתהליך הלמידה</div>
       </div>
   </span>
-  <button @click="nextPage()" v-if="corrrectAnswer === 4 "> המשך </button>
+  <button class="next" @click="nextPage()" v-if="corrrectAnswer === 4 "> המשך </button>
   </div>
 </template>
 
 <script>
+import AnimationType from './AnimationType.vue'
 export default {
   props: ['rightAns'],
   name: "typeBehavior",
+  components: {AnimationType},
   data() {
     return {
         numOfTry: 0,
@@ -84,9 +87,16 @@ export default {
 
 
 <style scoped>
-/* body {
-  direction: rtl;
-} */
+#typeBehavior {
+  background-image: url("@/assets/artboard.svg");
+  background-size: 100%, 100%;
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  position: absolute;
+  overflow: hidden;
+  z-index: -2;
+}
 
 .typewriter h1 {
   direction: rtl;
@@ -95,17 +105,36 @@ export default {
   overflow: hidden; 
   border-left: .15em solid; 
   white-space: nowrap; 
-  /* margin: 0 auto; */
+  margin: 0 auto;
   letter-spacing: .15em; 
+  width: 43vw;
   animation: 
     typing 3.5s steps(30, end),
     blink-caret .5s step-end infinite;
 }
 
+.typewriter {
+  position: relative;
+  top: 20vh;
+}
+
+.typewriter button{
+  display: block;
+  margin: 0 auto;
+  margin-top: 2vh;
+  /* transform: translate(); */
+}
+
+.next {
+  display: block;
+  margin: 0 auto;
+  margin-top: 23vh;
+}
+
 /* The typing effect */
 @keyframes typing {
   from { width: 0 }
-  to { width: 30% }
+  to { width: 43% }
 }
 
 
@@ -135,8 +164,11 @@ export default {
 
 }
 .cards {
-  margin-top: 15vh;
-  margin-left: 25vw;
+  /* margin-top: 15vh;
+  margin-left: 25vw; */
+  position: relative;
+  top: 20vh;
+  left: 25vw;
   display: flex;
   width: 49vw;
   height: 60vh;
@@ -154,7 +186,7 @@ export default {
     var(--rotate)
     , #5ddcff, #3c67e3 43%, #4e00c2);
     position: absolute;
-    z-index: -1;
+    z-index:-1;
     top: -1%;
     left: -2%;
     animation: spin 2.5s linear infinite;

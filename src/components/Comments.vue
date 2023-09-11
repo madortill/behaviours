@@ -1,9 +1,10 @@
 <template>
     <div id="comments">
-      <span v-if="!showContent">
-            <div>תגובות אפשריות של המדריך</div>
+      <!-- <span class="typewriter" v-if="!showContent">
+            <h1>תגובות אפשריות של המדריך</h1>
             <button @click="startLearn()" > למד אותי </button>
-      </span>
+      </span> -->
+      <animationType v-if="!showContent" @startLearn="startLearn()" :numText="1"></animationType>
       <div v-if="showContent" class="container">
           <div id="stack" class="slider" >
               <div :key="slide.index" v-for="(slide, i) in slides" @click="moveSlide()" class="slide">
@@ -13,14 +14,16 @@
               </div>
           </div>
       </div>
-      <button @click="nextPage()" v-if="animation  >= 8"> המשך </button>
+      <button class="next" @click="nextPage()" v-if="animation  >= 8"> המשך </button>
     </div>
   </template>
 
   <script>
+  import AnimationType from './AnimationType.vue'
   export default {
     props: ['rightAns'],
     name: "comments",
+    components: {AnimationType},
     data() {
         return {
             slides: [
@@ -93,6 +96,21 @@
   
   
   <style scoped>
+  #comments {
+  background-image: url("@/assets/artboard.svg");
+  background-size: 100%, 100%;
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  position: absolute;
+  z-index: -2;
+}
+
+.next {
+  display: block;
+  margin: 0 auto;
+  margin-top: 2vh;
+}
 
 .container {
   width: 60vw;

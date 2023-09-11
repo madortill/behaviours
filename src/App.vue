@@ -8,7 +8,7 @@
       </span>
     <!-- <board v-if="numPage === 2"></board> -->
     <!-- <mainScreen :numLogin="numLogin" @nextPage="changePage" v-if="numPage === 1" ></mainScreen> -->
-    <Game :numLogin="numLogin" @nextPage="changePage" v-if="numPage === 4"></Game>
+    <Game @saveArr="saveArr" :successes="gameArr" :numLogin="numLogin" @nextPage="changePage" v-if="numPage === 4"></Game>
     <typeBehavior @nextPage="changePage" v-if="numPage === 2" ></typeBehavior>
     <comments @nextPage="changePage" v-if="numPage === 3"></comments>
     <howToUse @nextPage="changePage" v-if="numPage === 5"></howToUse>
@@ -31,8 +31,9 @@ export default {
   data() {
     return {
       start: false,
-      numPage: 4,
-      numLogin: 1
+      numPage: 1,
+      numLogin: 1,
+      gameArr: []
     }
   },
   mounted () {
@@ -42,10 +43,19 @@ export default {
   },
   methods: {
     changePage(numPage) {
+      if(numPage === 1) {
+        this.start = true;
+        this.numPage = 1;
+        this.numLogin = 1;
+        this.gameArr = [];
+      }
       if (numPage === 4 && this.numPage === 5){
         this.numLogin = 2;
       }
       this.numPage = numPage;
+    },
+    saveArr(arrGame) {
+      this.gameArr = arrGame;
     }
   }
 }
