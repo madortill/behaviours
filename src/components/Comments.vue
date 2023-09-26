@@ -1,15 +1,11 @@
 <template>
     <div id="comments">
-      <!-- <span class="typewriter" v-if="!showContent">
-            <h1>תגובות אפשריות של המדריך</h1>
-            <button @click="startLearn()" > למד אותי </button>
-      </span> -->
       <animationType v-if="!showContent" @startLearn="startLearn()" :numText="1"></animationType>
       <div v-if="showContent" class="container">
           <div id="stack" class="slider" >
               <div :key="slide.index" v-for="(slide, i) in slides" @click="moveSlide()" class="slide">
                   <div :class="animation > 0 ? `slide__inner animation` : `slide__inner`" > {{slide.name}} 
-                      <div > {{slide.description}} </div>
+                      <div class="text"> {{slide.description}} </div>
                     </div>
               </div>
           </div>
@@ -35,42 +31,42 @@
             {
                 'index': 1,
                 'name': "קרבה פיזית",
-                'description': "ישר ורציני לעני החניך, משמש כתגובה להפרעות קלות"
+                'description': "גורמת לחניך לחוש מחויבות לשיעור"
             },
             {
                 'index': 2,
                 'name': "שתיקה",
-                'description': "ישר ורציני לעני החניך, משמש כתגובה להפרעות קלות"
+                'description': "מנוגדת להתנהגות הרגילה של המדריך, ולכן מרכזת את תשומת לב החניכים"
             },
             {
                 'index': 3,
                 'name': "שיקוף",
-                'description': "ישר ורציני לעני החניך, משמש כתגובה להפרעות קלות"
+                'description': "שיקוף מילולי- תיאור התנהגות אובייקטיבי, שיקוף השלכות- תיאור ההשלכות של ההתנהגות על החניך עצמו, המדריך או הכיתה כולה"
             },
             {
                 'index': 4,
                 'name': "סילוק גורמים מסיחים",
-                'description': "ישר ורציני לעני החניך, משמש כתגובה להפרעות קלות"
+                'description': "גורם מסיח הינו חפץ נייח או חניך שמפריע, יש לציין מתי החפץ יוחזר ולמקמו במקום ידוע לחניך"
             },
             {
                 'index': 5,
                 'name': "הומור",
-                'description': "ישר ורציני לעני החניך, משמש כתגובה להפרעות קלות"
+                'description': "הומור יוצר אווירה לימודית נעימה ומשוחררת, מעודד ומעורר מוטיבציה וקשב יש להזהר מהערות פוגעות ומעליבות"
             },
             {
                 'index': 6,
                 'name': "הגדרת חוזה התנהגותי",
-                'description': "ישר ורציני לעני החניך, משמש כתגובה להפרעות קלות"
+                'description': "מהווה הבהרה מחדש של כללי ההתנהגות, שימושי כשדפוס התנהגות מסוים משתרש בכיתה כולה"
             },
             {
                 'index': 7,
                 'name': "סילוק ידידותי",
-                'description': "ישר ורציני לעני החניך, משמש כתגובה להפרעות קלות"
+                'description': "אין להביע כעס! על החניך להבין שהדבר נעששה לטובתו ולטובת כל הכיתה, יש להגדיר לחניך היכן להימצא, מה לעשות ומתי לחזור לכיתה"
             },
             {
                 'index': 8,
                 'name': "חיובי",
-                'description': "ישר ורציני לעני החניך, משמש כתגובה להפרעות קלות"
+                'description': "אם ניטול את האפי השלילי של התגובה ונתייחס אליה כאל תגובה רצויה וחיובית- היא אכן תהפוך לכזו"
             }
             ],
             animation: 0,
@@ -96,6 +92,16 @@
   
   
   <style scoped>
+.text {
+  position: absolute;
+  text-align: center;
+  direction: rtl;
+  width: 13vw;
+  margin-right: 10%;
+  margin-top: 45%;
+  font-size: 1vw;
+}
+  
   #comments {
   background-image: url("@/assets/artboard.svg");
   background-size: 100%, 100%;
@@ -125,8 +131,8 @@
   width: 300px;
   height: 450px;
   margin: 0 auto;
-  border: 0.2vh solid black;
-  background-color: #2968b6;
+  background-color: #ffcc66;
+  border: 0.2vh solid #ffad33;
   display: flex;
   position: relative;;
 }
@@ -136,29 +142,19 @@
   height: 100%;
   position: absolute;
   cursor: pointer;
-  border: 0.2vh solid black;
-  background-color: #2968b6;
+  background-color: #ffcc66;
+  border: 0.2vh solid #ffad33;
   transition: transform 100ms ease-in-out;
   margin-left: 5%;
   margin-top: 5%;
-  /* animation: slide 1s linear; */
+  
  
 }
-/* .slider--loaded:nth-child(2)  {
-  transform: translate3d(-20px, -20px, 0)
-}
 
-.slider--loaded:nth-child(3) {
-  transform: translate3d(-40px, -40px, 0)
-}
-
-.slider--loaded:nth-child(4) {
-  transform: translate3d(-60px, -60px, 0)
-} */
 
 .slide__inner {
-  background-color: #2968b6;
-  border: 0.2vh solid black;
+  background-color: #ffcc66;
+  border: 0.2vh solid #ffad33;
   position: relative;
   width: 100%;
   height: 100%;
@@ -166,7 +162,9 @@
   background-size: cover;
   margin-top: 5%;
   margin-left: 5%;
-  /* animation: slide 1s linear; */
+  text-align: center;
+  direction: rtl;
+  font-size: 1.5vw;
 }
 
 .animation{

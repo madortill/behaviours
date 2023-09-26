@@ -1,39 +1,34 @@
 <template>
     <div id="app">
+      <navbar  v-if="numPage > 1 && numPage !== 4 " id="navbar" @goToPage="changePage" :navbarArr="navbarArr"></navbar>
       <span v-if="numPage === 1">
         <div v-if="!start" class="black"></div>
-        <div v-if="start" class="startText">
-          <button @click="changePage(2)" >המשך</button>
-        </div>
+        <notebook @nextPage="changePage" v-if="start" :numText="0"></notebook>
       </span>
-    <!-- <board v-if="numPage === 2"></board> -->
-    <!-- <mainScreen :numLogin="numLogin" @nextPage="changePage" v-if="numPage === 1" ></mainScreen> -->
     <Game @saveArr="saveArr" :successes="gameArr" :numLogin="numLogin" @nextPage="changePage" v-if="numPage === 4"></Game>
     <typeBehavior @nextPage="changePage" v-if="numPage === 2" ></typeBehavior>
     <comments @nextPage="changePage" v-if="numPage === 3"></comments>
     <howToUse @nextPage="changePage" v-if="numPage === 5"></howToUse>
     </div>
-    <div v-if="numPage === 6" class="start">
-      <div> כל הכבוד כל התלמידים מרוכזים ומחכים שתעביר את החומר, עכשיו הכל תלוי בך. בהצלחה!</div>
-      <button @click="changePage(1)">בא לי שוב</button>
-    </div>
+    <notebook @nextPage="changePage" v-if="numPage === 6" :numText="1"></notebook>
 </template>
 
 <script>
-// import MainScreen from './components/MainScreen.vue'
+import Navbar from './components/Navbar.vue'
+import Notebook from './components/Notebook.vue'
 import TypeBehavior from './components/TypeBehavior.vue'
 import HowToUse from './components/HowToUse.vue'
 import Comments from './components/Comments.vue'
-// import Board from './components/Board.vue'
 import Game from './components/Game.vue'
 export default {
-  components: {TypeBehavior, HowToUse, Comments, Game},
+  components: {TypeBehavior, HowToUse, Comments, Game, Notebook, Navbar},
   data() {
     return {
       start: false,
-      numPage: 1,
+      numPage: 3,
       numLogin: 1,
-      gameArr: []
+      gameArr: [],
+      navbarArr: [true, true, false, false, true, false]
     }
   },
   mounted () {
@@ -43,6 +38,7 @@ export default {
   },
   methods: {
     changePage(numPage) {
+      this.navbarArr[numPage] = true
       if(numPage === 1) {
         this.start = true;
         this.numPage = 1;
@@ -63,10 +59,13 @@ export default {
 
 
 <style scoped>
-
+#navbar{
+  position: relative;
+  z-index: 3;
+}
 .black{
-  width: 98vw;
-  height: 97vh;
+  width: 100vw;
+  height: 100vh;
   background-color: black;
   animation: openscreen 2s  forwards;
 }

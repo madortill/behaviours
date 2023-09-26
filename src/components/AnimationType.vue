@@ -1,7 +1,7 @@
 <template>
   <div id="animationType">
     <span class="typewriter">
-      <h1>{{ arr[numText] }}</h1>
+      <h1 :style="lineLenght">{{ arr[numText] }}</h1>
       <button @click="startLearn()" > למד אותי </button>
     </span>
   </div>
@@ -18,9 +18,27 @@ export default {
   },
   methods: {
     startLearn() {
+      console.log("gili");
         this.$emit("startLearn");
     }
   },
+  computed: {
+    lineLenght() {
+      if(this.numText === 0) {
+        return {
+          "width" : "43vw"
+        }
+      }
+      else if(this.numText === 1) {
+        return {
+          "width" : "20vw"
+        }
+      }
+      return {
+        "width" : "30vw"
+      }
+    },
+  }
 }
 </script>
 
@@ -49,13 +67,12 @@ export default {
   display: block;
   margin: 0 auto;
   margin-top: 2vh;
-  /* transform: translate(); */
 }
 
-/* The typing effect */
+
 @keyframes typing {
   from { width: 0 }
-  to { width: 43% }
+  to { width: lineLenght }
 }
 
 

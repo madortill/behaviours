@@ -1,19 +1,15 @@
 <template>
   <div id="typeBehavior">
-    <!-- <span class="typewriter"  v-if="!showContent">
-      <h1>סוגי ההתנהגות של הלומדים,נלמד באמצעות משחק הזיכרון </h1>
-      <button @click="startLearn()" > למד אותי </button>
-    </span> -->
     <animationType v-if="!showContent" @startLearn="startLearn()" :numText="0"></animationType>
     <span class="cards" v-if="showContent">
-      <div @click="checkAnswer(1, 0)" class="container" :class="cardClass[0]">
+      <!-- <div @click="checkAnswer(1, 0)" class="container" :class="cardClass[0]">
         <div>התנהגות אידיאלית</div>
       </div>
       <div @click="checkAnswer(3, 5)" class="container" :class="cardClass[5]">
       <div>התנהגות חריגה לגיטימית</div>
       </div>
       <div @click="checkAnswer(1, 1)" class="container" :class="cardClass[1]">
-      <div>התנהגות מופתית, בהתאם לציפיות ודרישות המדדריך</div>
+      <div>התנהגות מופתית, בהתאם לציפיות ודרישות המדריך</div>
       </div>
       <div @click="checkAnswer(2, 2)" class="container" :class="cardClass[2]">
       <div>הפרעה ממשית</div>
@@ -29,9 +25,12 @@
       </div>
       <div @click="checkAnswer(3, 4)" class="container" :class="cardClass[4]">
       <div>התנהגות שאינה פוגעת בתהליך הלמידה</div>
+      </div> -->
+      <div v-for="(key, index) in shuffleKeys" @click="checkAnswer(index, answers[key])" :class="['container', 'card', cardClass[index]]"  :key='key' :ref="'card ' + index" @animationend="removeShake">
+        <div> {{ key }} </div>
       </div>
-  </span>
-  <button class="next" @click="nextPage()" v-if="corrrectAnswer === 4 "> המשך </button>
+    </span>
+    <button class="next" @click="nextPage()" v-if="corrrectAnswer === 4"> המשך </button>
   </div>
 </template>
 
@@ -40,46 +39,76 @@ import AnimationType from './AnimationType.vue'
 export default {
   props: ['rightAns'],
   name: "typeBehavior",
-  components: {AnimationType},
+  components: { AnimationType },
   data() {
     return {
-        numOfTry: 0,
-        lastAnswer: 0,
-        ladtLocation: 0,
-        cardClass: ["card", "card", "card", "card", "card", "card", "card", "card"],
-        corrrectAnswer: 0,
-        showContent: false
+      numOfTry: 0,
+      lastAnswer: 0,
+      ladtLocation: 0,
+      cardClass: ["card", "card", "card", "card", "card", "card", "card", "card"],
+      corrrectAnswer: 0,
+      showContent: false,
+      answers: // term: definition
+      {
+        'התנהגות אידיאלית': 0,
+        'התנהגות מופתית, בהתאם לציפיות ודרישות המדריך': 0,
+        'התנהגות חריגה לגיטימית': 1,
+        'התנהגות שאינה פוגעת בתהליך הלמידה': 1,
+        'הפרעה ממשית': 2,
+        'התנהגות שפוגעת בתהליך הלמידה (בחניך או בסביבתו)': 2,
+        'התנגדות': 3,
+        'התנהגות מכוונת שפוגעת בתהליך הלמידה ונובעת מסיבותיו האישיות של החניך (מוטיבציה, אופי, תקשורת וכו\')': 3
+      }
     }
   },
   methods: {
-    checkAnswer(currentAnswer, location) {
-      this.numOfTry++;
-      if (this. numOfTry === 1){
-        this.lastAnswer = currentAnswer;
-        this.ladtLocation = location
-      }
-      else if (this. numOfTry === 2){
-        this.numOfTry = 0;
-        if (currentAnswer === this.lastAnswer && this.ladtLocation != location) {
-          this.corrrectAnswer +=1;
-          this.cardClass[location] +=  ` couple${currentAnswer}`;
-          this.cardClass[this.ladtLocation] +=  ` couple${currentAnswer}`;
+    checkAnswer(location, currentAnswer) {
+      if (!this.cardClass[location].includes("couple")) {
+        if (this.numOfTry === 0) {
+          this.lastAnswer = currentAnswer;
+          this.ladtLocation = location;
+          this.numOfTry = 1;
         }
-        else {
-          this.cardClass[location] += " shake";
-          this.cardClass[this.ladtLocation] += " shake";
-          setTimeout(() => {
-            this.cardClass[location] = "card";
-          this.cardClass[this.ladtLocation] = "card";
-          }, 2000);
+        else if (this.numOfTry === 1) {
+          // this.numOfTry = 0;
+          if (currentAnswer === this.lastAnswer && this.ladtLocation != location) {
+            this.corrrectAnswer += 1;
+            this.$refs['card ' + location][0].classList.add(`couple${currentAnswer}`);
+            this.$refs['card ' + this.ladtLocation][0].classList.add(`couple${currentAnswer}`);
+          }
+          else {
+            console.log(this.$refs['card ' + location][0].classList);
+            this.$refs['card ' + location][0].classList.add(`shake`);
+            this.$refs['card ' + this.ladtLocation][0].classList.add(`shake`);
+          }
+          this.lastAnswer = 0;
+          this.ladtLocation = 0;
+          this.numOfTry = 0;
         }
       }
+    },
+    removeShake (event) {
+      event.currentTarget.classList.remove('shake');
     },
     nextPage() {
-      this.$emit(`nextPage`,3);
+      this.$emit(`nextPage`, 3);
     },
     startLearn() {
-            this.showContent = true;
+      this.showContent = true;
+      console.log(this.showContent);
+    },
+  },
+  computed: {
+    shuffleKeys() {
+      let arr = Object.keys(this.answers);
+      let tmp = arr.slice();
+      for (let i = 0; i < arr.length; i++) {
+        let index = Math.floor(Math.random() * tmp.length);
+        arr[i] = tmp[index];
+        tmp = tmp.slice(0, index).concat(tmp.slice(index + 1));
+      }
+      console.log(arr);
+      return arr;
     }
   },
 }
@@ -98,32 +127,6 @@ export default {
   z-index: -2;
 }
 
-.typewriter h1 {
-  direction: rtl;
-  color: black;
-  font-family: monospace;
-  overflow: hidden; 
-  border-left: .15em solid; 
-  white-space: nowrap; 
-  margin: 0 auto;
-  letter-spacing: .15em; 
-  width: 43vw;
-  animation: 
-    typing 3.5s steps(30, end),
-    blink-caret .5s step-end infinite;
-}
-
-.typewriter {
-  position: relative;
-  top: 20vh;
-}
-
-.typewriter button{
-  display: block;
-  margin: 0 auto;
-  margin-top: 2vh;
-  /* transform: translate(); */
-}
 
 .next {
   display: block;
@@ -131,20 +134,9 @@ export default {
   margin-top: 23vh;
 }
 
-/* The typing effect */
-@keyframes typing {
-  from { width: 0 }
-  to { width: 43% }
-}
-
-
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: black }
-}
 .card {
   width: 10vw;
-  height: 15vw;
+  height: 12vw;
   background-color: black;
   border-radius: 5%;
   cursor: pointer;
@@ -152,10 +144,11 @@ export default {
   position: relative;
   color: white;
 
-  
+
 
 }
-.container{
+
+.container {
   display: flex;
   direction: rtl;
   flex-direction: column;
@@ -163,11 +156,10 @@ export default {
   align-items: center;
 
 }
+
 .cards {
-  /* margin-top: 15vh;
-  margin-left: 25vw; */
   position: relative;
-  top: 20vh;
+  top: 15vh;
   left: 25vw;
   display: flex;
   width: 49vw;
@@ -182,14 +174,12 @@ export default {
   width: 104%;
   height: 102%;
   border-radius: 8px;
-  background-image: linear-gradient(
-    var(--rotate)
-    , #5ddcff, #3c67e3 43%, #4e00c2);
-    position: absolute;
-    z-index:-1;
-    top: -1%;
-    left: -2%;
-    animation: spin 2.5s linear infinite;
+  background-image: linear-gradient(var(--rotate), #5ddcff, #3c67e3 43%, #4e00c2);
+  position: absolute;
+  z-index: -1;
+  top: -1%;
+  left: -2%;
+  animation: spin 2.5s linear infinite;
 }
 
 .couple1::after {
@@ -204,10 +194,8 @@ export default {
   margin: 0 auto;
   transform: scale(0.8);
   filter: blur(calc(var(--card-height) / 6));
-  background-image: linear-gradient(
-    var(--rotate)
-    , #5ddcff, #3c67e3 43%, #4e00c2);
-    opacity: 1;
+  background-image: linear-gradient(var(--rotate), #5ddcff, #3c67e3 43%, #4e00c2);
+  opacity: 1;
   transition: opacity .5s;
   animation: spin 2.5s linear infinite;
 }
@@ -217,14 +205,12 @@ export default {
   width: 104%;
   height: 102%;
   border-radius: 8px;
-  background-image: linear-gradient(
-    var(--rotate)
-    , #ffb3d1,#ff66a3 43%, #ff3385);
-    position: absolute;
-    z-index: -1;
-    top: -1%;
-    left: -2%;
-    animation: spin 2.5s linear infinite;
+  background-image: linear-gradient(var(--rotate), #ffb3d1, #ff66a3 43%, #ff3385);
+  position: absolute;
+  z-index: -1;
+  top: -1%;
+  left: -2%;
+  animation: spin 2.5s linear infinite;
 }
 
 .couple2::after {
@@ -239,10 +225,8 @@ export default {
   margin: 0 auto;
   transform: scale(0.8);
   filter: blur(calc(var(--card-height) / 6));
-  background-image: linear-gradient(
-    var(--rotate)
-    , #ffb3d1,#ff66a3 43%, #ff3385);
-    opacity: 1;
+  background-image: linear-gradient(var(--rotate), #ffb3d1, #ff66a3 43%, #ff3385);
+  opacity: 1;
   transition: opacity .5s;
   animation: spin 2.5s linear infinite;
 }
@@ -252,14 +236,12 @@ export default {
   width: 104%;
   height: 102%;
   border-radius: 8px;
-  background-image: linear-gradient(
-    var(--rotate)
-    ,  #ffc299,#ff8533 43%, #ff6600);
-    position: absolute;
-    z-index: -1;
-    top: -1%;
-    left: -2%;
-    animation: spin 2.5s linear infinite;
+  background-image: linear-gradient(var(--rotate), #ffc299, #ff8533 43%, #ff6600);
+  position: absolute;
+  z-index: -1;
+  top: -1%;
+  left: -2%;
+  animation: spin 2.5s linear infinite;
 }
 
 .couple3::after {
@@ -274,30 +256,26 @@ export default {
   margin: 0 auto;
   transform: scale(0.8);
   filter: blur(calc(var(--card-height) / 6));
-  background-image: linear-gradient(
-    var(--rotate)
-    , #ffc299,#ff8533 43%, #ff6600);
+  background-image: linear-gradient(var(--rotate), #ffc299, #ff8533 43%, #ff6600);
   opacity: 1;
   transition: opacity .5s;
   animation: spin 2.5s linear infinite;
 }
 
-.couple4::before {
+.couple0::before {
   content: "";
   width: 104%;
   height: 102%;
   border-radius: 8px;
-  background-image: linear-gradient(
-    var(--rotate)
-    , #ffffb3, #ffff4d 43%, #e6e600);
-    position: absolute;
-    z-index: -1;
-    top: -1%;
-    left: -2%;
-    animation: spin 2.5s linear infinite;
+  background-image: linear-gradient(var(--rotate), #ffffb3, #ffff4d 43%, #e6e600);
+  position: absolute;
+  z-index: -1;
+  top: -1%;
+  left: -2%;
+  animation: spin 2.5s linear infinite;
 }
 
-.couple4::after {
+.couple0::after {
   position: absolute;
   content: "";
   top: calc(var(--card-height) / 6);
@@ -309,28 +287,21 @@ export default {
   margin: 0 auto;
   transform: scale(0.8);
   filter: blur(calc(var(--card-height) / 6));
-  background-image: linear-gradient(
-    var(--rotate)
-    , #ffffb3, #ffff4d 43%, #e6e600);
+  background-image: linear-gradient(var(--rotate), #ffffb3, #ffff4d 43%, #e6e600);
   opacity: 1;
   transition: opacity .5s;
   animation: spin 2.5s linear infinite;
 }
 
-.shake{
-  animation: shake 1s 
-  
-  
-  
-  
-  
-  ;
+.shake {
+  animation: shake 1s;
 }
 
 @keyframes spin {
   0% {
     --rotate: 0deg;
   }
+
   100% {
     --rotate: 360deg;
   }
@@ -338,22 +309,25 @@ export default {
 
 @keyframes shake {
   0% {
-    transform:  rotate(5deg);
+    transform: rotate(5deg);
   }
+
   25% {
-    transform:  rotate(-5deg);
+    transform: rotate(-5deg);
   }
+
   50% {
-    transform:  rotate(2deg);
+    transform: rotate(2deg);
   }
+
   75% {
-    transform:  rotate(-5deg);
+    transform: rotate(-5deg);
   }
+
   100% {
     transform: rotate(-2deg);
   }
 }
-
 </style>
 
 @keyframes shake {

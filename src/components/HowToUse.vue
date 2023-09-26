@@ -1,9 +1,5 @@
 <template>
     <div id="howToUse">
-      <!-- <span v-if="!showContent">
-            <div>עקרונות לבחירה ושימוש בתגובה</div>
-            <button @click="startLearn()" > למד אותי </button>
-      </span> -->
       <animationType v-if="!showContent" @startLearn="startLearn()" :numText="2"></animationType>
       <span  v-if="showContent" class="bigContainer">
           <section class="container"> 
@@ -52,16 +48,16 @@
   
   <style scoped>
 
-/* HTML {
-  font-family: "Libre Baskerville", "Open Sans", sans-serif, serif;
-  font-size: 100%;
-  line-height: 1.5;
-  box-sizing: border-box;
+#howToUse {
+  background-image: url("@/assets/artboard.svg");
+  background-size: 100%, 100%;
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  position: absolute;
+  overflow: hidden;
+  z-index: -2;
 }
-
-BODY {
-  color: #3a3d40;
-} */
 
 *, *::before, *::after {
   box-sizing: inherit;
@@ -92,6 +88,7 @@ BODY {
   box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
   transform-origin: center 325%; 
   transition: transform .5s ease-out;
+  top: 10vh;
 }
 
 .container:hover .img-stack:first-child {

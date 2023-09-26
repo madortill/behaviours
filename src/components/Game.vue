@@ -1,10 +1,13 @@
 <template>
     <div id="game">
         <span v-if="showInstruction">
-            <div class="instruction"> לחץ על כל תלמיד שאותו </div>
+            <div class="instruction">
+                <p class="textInstruction">עם הידע שצברתם, אתם יודעים איך לרכז את התלמידים בכיתה. תוכלו לעשות זאת בלחיצה על כל תלמיד שתרצו לעזור לו, בלחיצה על התלמיד תפתח שאלה שבמידה ותענו עליה נכון הריכוז של התלמידה ייהיה כל כולו שלכם, לכל שאלה פתוחה יהיו לכם שלושה ניסיונות. בהצלחה!</p>
+            </div>
             <button @click="gameOrInstruction">למשחק</button>
         </span>
-        <div  v-if="!showInstruction" @click="gameOrInstruction" class="toInstruction">להוראות</div>
+        <img src="@/assets/instructionIcon.png" v-if="!showInstruction" @click="gameOrInstruction" class="toInstruction">
+        <!-- <div  v-if="!showInstruction" @click="gameOrInstruction" class="toInstruction"></div> -->
         <span class="pupils">
             <div  @click="goQuestion(index)" :key="index" v-for="(value, index) in arr" class="pupil"></div>
         </span>
@@ -108,7 +111,6 @@ export default {
   },
   mounted () {
     if (this.numLogin === 2){
-        // this.numOuestion +=6;
         this.numOuestionOpen +=2;
         this.numOuestionClose +=4;
         this.numberTrueAnswer +=6;
@@ -121,13 +123,11 @@ export default {
         this.showInstruction = !this.showInstruction;
     },
     goQuestion(x) {
-        // console.log(x);
         this.numberAnswer = x;
         let xInArr = false;
         for (let i = 0; i < this.arrSuccesses.length; i++) { 
             console.log(this.arrSuccesses[i]);
             if (this.arrSuccesses[i] === x){
-                // console.log(this.arrSuccesses[i]);
                 xInArr = true;
             }
         }
@@ -149,13 +149,13 @@ export default {
                     this.numberTrueAnswer++;
                     this.numOuestionOpen +=1;
                     this.answer = "";
+                    this.numTry = 0;
                 }, 1500);
             }
             else {
                 if(this.numTry === 0) {
                     this.numTry++;
                     this.answer = "";
-                    // console.log(this.numTry, this.isTrueAnswer)
                 }
                 else {
                     this.numTry++;
@@ -199,15 +199,32 @@ export default {
 
 
 <style scoped>
+button {
+ margin-left: 45vw;
+ margin-top: 20vh;
+
+}
+.textInstruction {
+width: 40vw;
+position: absolute;
+text-align: center;
+direction: rtl;
+margin-left: 25vw;
+margin-top: 20vh;
+font-size: 3vh;
+}
 .toInstruction{
-    margin-top: 0vh;
-    margin-right: 2vw;
+    width: 3vw;
+    height: 5vh;
+    margin-top: 2vh;
+    margin-left: 1.5vw;
 }
 .instruction {
-    width: 98vw;
-    height: 97vh;
+    width: 100vw;
+    height: 100vh;
     background-color: white;
-    opacity: 70%;
+    opacity: 90%;
+    z-index: -1;
 }
 .question {
     margin-top: 25vh;
