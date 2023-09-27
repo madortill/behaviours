@@ -18,7 +18,6 @@ export default {
   },
   methods: {
     startLearn() {
-      console.log("gili");
         this.$emit("startLearn");
     }
   },

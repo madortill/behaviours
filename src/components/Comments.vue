@@ -131,7 +131,7 @@
   width: 300px;
   height: 450px;
   margin: 0 auto;
-  background-color: #ffcc66;
+  background-color: #ffd580;
   border: 0.2vh solid #ffad33;
   display: flex;
   position: relative;;
@@ -142,7 +142,7 @@
   height: 100%;
   position: absolute;
   cursor: pointer;
-  background-color: #ffcc66;
+  background-color: #ffd580;
   border: 0.2vh solid #ffad33;
   transition: transform 100ms ease-in-out;
   margin-left: 5%;
@@ -153,7 +153,7 @@
 
 
 .slide__inner {
-  background-color: #ffcc66;
+  background-color: #ffd580;
   border: 0.2vh solid #ffad33;
   position: relative;
   width: 100%;

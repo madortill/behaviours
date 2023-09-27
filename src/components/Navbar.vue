@@ -12,12 +12,6 @@
       </div>
       
     </span>
-     <!-- <img @click="goToPage(2)" :disabled="true" src="@/assets/paper1.svg" :style="background">
-     <p>סוגי התנהגויות</p>
-     <img @click=" numPage>= 3 ? goToPage(3) : disabled" src="@/assets/paper2.svg" >
-     <p>תגובות המדריך ודרכי התמודדות</p>
-     <img @click="goToPage(5)" :disabled=" numPage>= 5 ? '' : disabled" src="@/assets/paper3.svg" >
-     <p>עקרונות לבחירה ושימוש</p> -->
     </div>
   </template>
   
@@ -36,11 +30,6 @@
         }
       }
     },
-    // computed: {
-    //   background() {
-    //     "background-image" : "url(`@/assets/paper&{}.svg`)"
-    //   }
-    // }
   }
   </script>
   

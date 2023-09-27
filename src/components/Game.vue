@@ -6,14 +6,20 @@
             </div>
             <button @click="gameOrInstruction">למשחק</button>
         </span>
-        <img src="@/assets/instructionIcon.png" v-if="!showInstruction" @click="gameOrInstruction" class="toInstruction">
-        <!-- <div  v-if="!showInstruction" @click="gameOrInstruction" class="toInstruction"></div> -->
+        <img  src="@/assets/instructionIcon.png" v-if="!showInstruction" @click="gameOrInstruction" class="toInstruction">
         <span class="pupils">
-            <div  @click="goQuestion(index)" :key="index" v-for="(value, index) in arr" class="pupil"></div>
+            <span class="row3" :style="numLogin===1 ? 'filter: grayscale(0.8);' : ''">
+                <img @click="goQuestion(index+7)" :key="index" v-for="(value, index) in imgRow3" :src="value" :id="'student' + index"  class="pupil" />
+            </span>
+            <span class=" row2">
+                <img  @click="goQuestion(index+4)" :key="index" v-for="(value, index) in imgRow2" :src="value" :id="'student' + index"  class="pupil" />
+            </span>
+            <span class="row1">
+                <img  @click="goQuestion(index)" :key="index" v-for="(value, index) in imgRow1" :src="value" :id="'student' + index"  class="pupil" />
+            </span>
         </span>
         <div class="question" v-if="showQuestion && arr[numOuestion] === 1">
             <ul> {{close1[numOuestionClose].question}}
-                <!-- <li>{{close1[numOuestionClose].question}}</li> -->
                 <li @click="checkAnswer(1)">{{close1[numOuestionClose].answer1}}</li>
                 <li @click="checkAnswer(2)">{{close1[numOuestionClose].answer2}}</li>
                 <li @click="checkAnswer(3)">{{close1[numOuestionClose].answer3}}</li>
@@ -94,6 +100,10 @@ export default {
                 answer3:"החלטיות" 
             }
         ],
+        imgRow3: ["/music.png","/sleep.png","/phone.png"],
+        imgRow2: ["/book2.png","/phone.png","/nail.png",],
+        imgRow1:["/shout.png","/talk.png","/book.png","/music2.png"],
+        imgGoodStud:["/darkBrownGoodStude.png","/blondGoodStude.png","/blackGoodStude.png","/darkBrownGoodStude.png","/blackGoodStude.png","/brownGoodStude.png","/redGoodStude.png","/darkBrownGoodStude.png","/blondGoodStude.png","/brownGoodStude.png"],
         answer: "",
         arr: [1,1,2,1,2,1,1,2,1,2],
         showQuestion: false,
@@ -115,6 +125,7 @@ export default {
         this.numOuestionClose +=4;
         this.numberTrueAnswer +=6;
         this.arrSuccesses = this.successes;
+
     }
   },
 
@@ -123,34 +134,45 @@ export default {
         this.showInstruction = !this.showInstruction;
     },
     goQuestion(x) {
-        this.numberAnswer = x;
-        let xInArr = false;
-        for (let i = 0; i < this.arrSuccesses.length; i++) { 
-            console.log(this.arrSuccesses[i]);
-            if (this.arrSuccesses[i] === x){
-                xInArr = true;
+        console.log(x);
+        if ((this.numLogin === 1 && x < 6) || (this.numLogin === 2 && x > 5)){
+            this.numberAnswer = x;
+            let xInArr = false;
+            for (let i = 0; i < this.arrSuccesses.length; i++) { 
+                if (this.arrSuccesses[i] === x){
+                    xInArr = true;
+                }
+            }
+            if(this.showQuestion === false && !xInArr){
+                this.numOuestion +=1;
+                this.showQuestion = true;
             }
         }
-        if(this.showQuestion === false && !xInArr){
-            this.numOuestion +=1;
-            this.showQuestion = true;
-        }
-
     },
+
     checkAnswer(number) {
         if(number===4){
             if(this.answer === this.open1[this.numOuestionOpen].trueAnswer) {
                 this.isTrueAnswer = true;
                 setTimeout(() => {
                     this.arrSuccesses[this.numberTrueAnswer] = this.numberAnswer;
-                    console.log(this.arrSuccesses);
                     this.isTrueAnswer = false;
                     this.showQuestion = false;
                     this.numberTrueAnswer++;
                     this.numOuestionOpen +=1;
                     this.answer = "";
                     this.numTry = 0;
+                    // console.log("gili");
                 }, 1500);
+                if(this.numberAnswer < 4) {
+                    this.imgRow1[this.numberAnswer] = this.imgGoodStud[this.numberAnswer]
+                }
+                else if(this.numberAnswer < 7) {
+                    this.imgRow2[this.numberAnswer-4] = this.imgGoodStud[this.numberAnswer]
+                }
+                else {
+                    this.imgRow3[this.numberAnswer-7] = this.imgGoodStud[this.numberAnswer]
+                }
             }
             else {
                 if(this.numTry === 0) {
@@ -174,13 +196,21 @@ export default {
             this.isTrueAnswer = true;
             setTimeout(() => {
                 this.arrSuccesses[this.numberTrueAnswer] = this.numberAnswer;
-                console.log(this.arrSuccesses);
                 this.isTrueAnswer = false;
                 this.showQuestion = false;
                 this.numberTrueAnswer++;
                 this.numOuestionClose +=1;
                 this.numTry = 0;
             }, 1500);
+            if(this.numberAnswer < 4) {
+                    this.imgRow1[this.numberAnswer] = this.imgGoodStud[this.numberAnswer]
+                }
+                else if(this.numberAnswer < 7) {
+                    this.imgRow2[this.numberAnswer-4] = this.imgGoodStud[this.numberAnswer]
+                }
+                else {
+                    this.imgRow3[this.numberAnswer-7] = this.imgGoodStud[this.numberAnswer]
+                }
         }
         else {
             this.numTry++;
@@ -199,6 +229,18 @@ export default {
 
 
 <style scoped>
+#game {
+    background-image: url("@/assets/media/class2.png");
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  position: absolute;
+  overflow: hidden;
+  background-position: bottom;
+  z-index: -2;
+}
+
 button {
  margin-left: 45vw;
  margin-top: 20vh;
@@ -235,27 +277,53 @@ font-size: 3vh;
     margin-left: 25vw;
     border-radius: 5%;
     color: white;
+    text-align: center; 
+    direction: rtl;
+    font-size: 1.5vh;
 }
+
+li {
+    border-radius: 10%;
+    border-width: 1vh;
+    border-color: aliceblue;
+    width: 35%;
+    margin-top: 5%;
+}
+
 .pupil {
-    width: 10vw;
-    height: 15vw;
-    background-color: black;
-    border-radius: 5%;
+    width: 30vw;
+    height: 30vw;
     cursor: pointer;
-    padding: 3px;
-    position: relative;
-    margin-left: 5vw;
+}
+
+.row1 {
+ position: absolute;
+ display: flex;
+ bottom: -90vh;
+ width: 90vw;
+}
+
+.row2 {
+position: absolute;
+ display: flex;
+ bottom: -80vh;
+ width: 70vw;
+}
+
+.row3 {
+position: absolute;
+ display: flex;
+ width: 50vw;
+ bottom: -70vh;
 }
 
 .pupils {
     position: absolute;
-    top: 25vh;
-    left: 6vw;
     display: flex;
-    width: 80vw;
-    height: 70vh;
+    width: 100vw;
+    height: 10vh;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     z-index: -1;
 }
 

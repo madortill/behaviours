@@ -5,7 +5,7 @@
                 <div class="page-inner" contenteditable>
                     <div><br></div><div>&nbsp; &nbsp;{{ arr[numText] }}&nbsp;</div>
                 </div>
-                <button v-if="numText === 0" @click="nextPage">בואו נתחיל</button>
+                <button id="go" v-if="numText === 0" @click="nextPage">בואו נתחיל</button>
             </div>
         </div>
     </div>
@@ -61,32 +61,29 @@
     2px 2px 3px rgba(0,0,0,.2);
 }
 
+#go {
+  position: absolute;
+  top: 45%;
+  right: 35%;
+}
 
-
-/** Right Page **/
 .right {
-/*   direction: rtl; */
   position: absolute;
   left: 50%; right: 10px;
   top: 10px; bottom: 10px;
-  
   background: rgb(247, 246, 212);
-  
   border-radius: 0 10px 10px 0;
   box-shadow:
     inset 10px 0 30px -10px rgba(0,0,0,.3),
     2px 2px 1px rgba(0,0,0,.8);
 }
 
-/** Page inner **/
 .page-inner {
   position: absolute;
   top: 30px; bottom: 20px;
   left: 15px; right: 15px;
   outline: none;
   overflow: hidden;
-
-  
   background: linear-gradient(
     to bottom,
     transparent,

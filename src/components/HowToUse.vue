@@ -47,6 +47,9 @@
   
   
   <style scoped>
+button{
+  margin-left: 45vw;
+}
 
 #howToUse {
   background-image: url("@/assets/artboard.svg");

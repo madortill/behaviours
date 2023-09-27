@@ -2,30 +2,6 @@
   <div id="typeBehavior">
     <animationType v-if="!showContent" @startLearn="startLearn()" :numText="0"></animationType>
     <span class="cards" v-if="showContent">
-      <!-- <div @click="checkAnswer(1, 0)" class="container" :class="cardClass[0]">
-        <div>התנהגות אידיאלית</div>
-      </div>
-      <div @click="checkAnswer(3, 5)" class="container" :class="cardClass[5]">
-      <div>התנהגות חריגה לגיטימית</div>
-      </div>
-      <div @click="checkAnswer(1, 1)" class="container" :class="cardClass[1]">
-      <div>התנהגות מופתית, בהתאם לציפיות ודרישות המדריך</div>
-      </div>
-      <div @click="checkAnswer(2, 2)" class="container" :class="cardClass[2]">
-      <div>הפרעה ממשית</div>
-      </div>
-      <div @click="checkAnswer(4, 7)" class="container" :class="cardClass[7]">
-      <div>התנהגות מכוונת שפוגעת בתהליך הלמידה ונובעת מסיבותיו האישיות של החניך (מוטיבציה, אופי, תקשורת וכו')</div>
-      </div>
-      <div @click="checkAnswer(2, 3)" class="container" :class="cardClass[3]">
-      <div>התנהגות שפוגעת בתהליך הלמידה (בחניך או בסביבתו)</div>
-      </div>
-      <div @click="checkAnswer(4, 6)" class="container" :class="cardClass[6]">
-      <div>התנגדות</div>
-      </div>
-      <div @click="checkAnswer(3, 4)" class="container" :class="cardClass[4]">
-      <div>התנהגות שאינה פוגעת בתהליך הלמידה</div>
-      </div> -->
       <div v-for="(key, index) in shuffleKeys" @click="checkAnswer(index, answers[key])" :class="['container', 'card', cardClass[index]]"  :key='key' :ref="'card ' + index" @animationend="removeShake">
         <div> {{ key }} </div>
       </div>
@@ -77,7 +53,6 @@ export default {
             this.$refs['card ' + this.ladtLocation][0].classList.add(`couple${currentAnswer}`);
           }
           else {
-            console.log(this.$refs['card ' + location][0].classList);
             this.$refs['card ' + location][0].classList.add(`shake`);
             this.$refs['card ' + this.ladtLocation][0].classList.add(`shake`);
           }
@@ -95,7 +70,6 @@ export default {
     },
     startLearn() {
       this.showContent = true;
-      console.log(this.showContent);
     },
   },
   computed: {
@@ -107,7 +81,6 @@ export default {
         arr[i] = tmp[index];
         tmp = tmp.slice(0, index).concat(tmp.slice(index + 1));
       }
-      console.log(arr);
       return arr;
     }
   },
@@ -118,7 +91,7 @@ export default {
 <style scoped>
 #typeBehavior {
   background-image: url("@/assets/artboard.svg");
-  background-size: 100%, 100%;
+  background-size: cover;
   width: 100vw;
   height: 100vh;
   background-repeat: no-repeat;
@@ -143,6 +116,7 @@ export default {
   padding: 3px;
   position: relative;
   color: white;
+  text-align: center; 
 
 
 

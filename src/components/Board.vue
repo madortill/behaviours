@@ -32,14 +32,11 @@ export default {
                 this.$emit(`nextPage`,1);
             }
             this.showContent = false;
-            console.log(thePage);
             this.numPage = thePage;
         },
 
         startLearn() {
-            console.log(this.numPage);
             this.showContent = true;
-            console.log(this.showContent);
         }
     }
   }

@@ -25,16 +25,19 @@ export default {
   data() {
     return {
       start: false,
-      numPage: 3,
+      numPage: 4,
       numLogin: 1,
       gameArr: [],
-      navbarArr: [true, true, false, false, true, false]
+      navbarArr: [true, true, false, false, true, false],
+      imgRow3: ["/music.png","/sleep.png","/phone.png"],
+      imgRow2: ["/book2.png","/phone.png","/nail.png",],
+      imgRow1:["/shout.png","/talk.png","/book.png","/music2.png"],
     }
   },
   mounted () {
     setTimeout(() => {
       this.start = true;
-    }, 2000);
+    }, 3000);
   },
   methods: {
     changePage(numPage) {
@@ -59,6 +62,18 @@ export default {
 
 
 <style scoped>
+#app{
+  background-image: url("@/assets/media/class1.png");
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  position: absolute;
+  overflow: hidden;
+  background-position: bottom;
+  z-index: -2;
+}
+
 #navbar{
   position: relative;
   z-index: 3;

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div id="mainScreen">
         <span class="pupils">
             <div @click="goQuestion()" :key="i.index" v-for="(i) in arr" class="pupil"></div>
@@ -28,7 +28,6 @@ export default {
   methods: {
     changePage() {
       this.numLogin++;
-      // console.log(this.numLogin);
       this.$emit(`nextPage`,2);
     },
     goQuestion() {
@@ -98,4 +97,4 @@ button{
     z-index: -1;
 }
 
-</style>
+</style> -->
