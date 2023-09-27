@@ -1,6 +1,6 @@
 <template>
-    <div id="app">
-      <navbar  v-if="numPage > 1 && numPage !== 4 " id="navbar" @goToPage="changePage" :navbarArr="navbarArr"></navbar>
+    <div :id="numPage===1 ? 'app' : 'done'">
+      <navbar  v-if="numPage > 1 && numPage !== 4 && numPage !== 6" id="navbar" @goToPage="changePage" :navbarArr="navbarArr"></navbar>
       <span v-if="numPage === 1">
         <div v-if="!start" class="black"></div>
         <notebook @nextPage="changePage" v-if="start" :numText="0"></notebook>
@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       start: false,
-      numPage: 4,
+      numPage: 1,
       numLogin: 1,
       gameArr: [],
       navbarArr: [true, true, false, false, true, false],
@@ -37,14 +37,14 @@ export default {
   mounted () {
     setTimeout(() => {
       this.start = true;
-    }, 3000);
+    }, 4500);
   },
   methods: {
     changePage(numPage) {
       this.navbarArr[numPage] = true
       if(numPage === 1) {
         this.start = true;
-        this.numPage = 1;
+        this.numPage = 2;
         this.numLogin = 1;
         this.gameArr = [];
       }
@@ -62,8 +62,20 @@ export default {
 
 
 <style scoped>
-#app{
+#app {
   background-image: url("@/assets/media/class1.png");
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  position: absolute;
+  overflow: hidden;
+  background-position: bottom;
+  z-index: -2;
+}
+
+#done {
+  background-image: url("@/assets/media/class3.png");
   background-size: cover;
   width: 100vw;
   height: 100vh;
@@ -82,7 +94,7 @@ export default {
   width: 100vw;
   height: 100vh;
   background-color: black;
-  animation: openscreen 2s  forwards;
+  animation: openscreen 3.5s  forwards;
 }
 
 @keyframes openscreen {

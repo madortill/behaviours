@@ -1,6 +1,6 @@
 <template>
     <div id="notebook">
-        <div class="notebook">
+        <div class="notebook" :class="numText===1 ? 'finish' : ''">
             <div class="right">
                 <div class="page-inner" contenteditable>
                     <div><br></div><div>&nbsp; &nbsp;{{ arr[numText] }}&nbsp;</div>
@@ -17,7 +17,7 @@
     name: "notebook",
     data() {
       return {
-          arr: [`ברוכים הבאים ללוממדת "התמודדות עם התנהגויות הלומדים, כפי ששמתם לב נכנסתם לכיתה חסרת ריכוז ובה כל חניך עסוק במשהו אחר, בוא נלמד איך להשיב את קשב החניכים אלינו"`, " כל הכבוד, הצלחתם לרכז את כלל התלמידים, כל שנות הוא להעביר את החומר הרצוי בצורה נכונה, בהצלחה!! "],
+          arr: [`ברוכים הבאים ללומדת "התמודדות עם התנהגויות הלומדים, כפי ששמתם לב נכנסתם לכיתה חסרת ריכוז ובה כל חניך עסוק במשהו אחר, בוא נלמד איך להשיב את קשב החניכים אלינו"`, " כל הכבוד, הצלחתם לרכז את כלל התלמידים, כל שנותר לעשות זה להעביר את החומר הרצוי בצורה נכונה, בהצלחה!! "],
         //   buttonArr: ["בואו נתחיל", "בא לי שוב"]
       }
     },
@@ -30,6 +30,17 @@
   </script>
   
   <style scoped>
+  /* .finish {
+    background-image: url("@/assets/media/class3.png");
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  position: absolute;
+  overflow: hidden;
+  background-position: bottom;
+  z-index: -2;
+  } */
 .notebook {
     direction: rtl;
   position: absolute;

@@ -2,7 +2,7 @@
   <div id="typeBehavior">
     <animationType v-if="!showContent" @startLearn="startLearn()" :numText="0"></animationType>
     <span class="cards" v-if="showContent">
-      <div v-for="(key, index) in shuffleKeys" @click="checkAnswer(index, answers[key])" :class="['container', 'card', cardClass[index]]"  :key='key' :ref="'card ' + index" @animationend="removeShake">
+      <div :style="isPressed" v-for="(key, index) in shuffleKeys" @click="checkAnswer(index, answers[key])" :class="['card', cardClass[index]]"  :key='key' :ref="'card ' + index" @animationend="removeShake">
         <div> {{ key }} </div>
       </div>
     </span>
@@ -24,6 +24,7 @@ export default {
       cardClass: ["card", "card", "card", "card", "card", "card", "card", "card"],
       corrrectAnswer: 0,
       showContent: false,
+      pressed: false,
       answers: // term: definition
       {
         'התנהגות אידיאלית': 0,
@@ -84,6 +85,17 @@ export default {
       return arr;
     }
   },
+
+  computed: {
+    isPressed() {
+      this.pressed = !this.pressed;
+      if(this.pressed){
+        return {
+          "border": "3px solid white"
+        }
+      }
+    }
+  }
 }
 </script>
 
@@ -110,25 +122,26 @@ export default {
 .card {
   width: 10vw;
   height: 12vw;
-  background-color: black;
+  background-color: rgb(129, 216, 129);
+  opacity: 70%;
   border-radius: 5%;
   cursor: pointer;
-  padding: 3px;
   position: relative;
-  color: white;
+  color: black;
   text-align: center; 
-
-
-
-}
-
-.container {
   display: flex;
   direction: rtl;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+}
 
+.pressed {
+  border: 3px solid white;
+}
+
+.card :hover {
+  opacity: 40%;
 }
 
 .cards {
@@ -148,7 +161,7 @@ export default {
   width: 104%;
   height: 102%;
   border-radius: 8px;
-  background-image: linear-gradient(var(--rotate), #5ddcff, #3c67e3 43%, #4e00c2);
+  background-image: linear-gradient(var(--rotate), #5ddcff, #4f71d6 43%, #564bf0);
   position: absolute;
   z-index: -1;
   top: -1%;
@@ -168,7 +181,7 @@ export default {
   margin: 0 auto;
   transform: scale(0.8);
   filter: blur(calc(var(--card-height) / 6));
-  background-image: linear-gradient(var(--rotate), #5ddcff, #3c67e3 43%, #4e00c2);
+  background-image: linear-gradient(var(--rotate), #5ddcff, #4f71d6 43%, #564bf0);
   opacity: 1;
   transition: opacity .5s;
   animation: spin 2.5s linear infinite;
@@ -241,7 +254,7 @@ export default {
   width: 104%;
   height: 102%;
   border-radius: 8px;
-  background-image: linear-gradient(var(--rotate), #ffffb3, #ffff4d 43%, #e6e600);
+  background-image: linear-gradient(var(--rotate), #dfcc78, #dac04f 43%, #ddb810);
   position: absolute;
   z-index: -1;
   top: -1%;
@@ -261,7 +274,7 @@ export default {
   margin: 0 auto;
   transform: scale(0.8);
   filter: blur(calc(var(--card-height) / 6));
-  background-image: linear-gradient(var(--rotate), #ffffb3, #ffff4d 43%, #e6e600);
+  background-image: linear-gradient(var(--rotate), #dfcc78, #dac04f 43%, #ddb810);
   opacity: 1;
   transition: opacity .5s;
   animation: spin 2.5s linear infinite;

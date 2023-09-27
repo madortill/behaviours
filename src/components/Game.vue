@@ -2,19 +2,19 @@
     <div id="game">
         <span v-if="showInstruction">
             <div class="instruction">
-                <p class="textInstruction">עם הידע שצברתם, אתם יודעים איך לרכז את התלמידים בכיתה. תוכלו לעשות זאת בלחיצה על כל תלמיד שתרצו לעזור לו, בלחיצה על התלמיד תפתח שאלה שבמידה ותענו עליה נכון הריכוז של התלמידה ייהיה כל כולו שלכם, לכל שאלה פתוחה יהיו לכם שלושה ניסיונות. בהצלחה!</p>
+                <p class="textInstruction">עם הידע שצברתם, אתם יודעים איך לרכז את התלמידים בכיתה. תוכלו לעשות זאת בלחיצה על כל תלמיד שתרצו לעזור לו, בלחיצה על התלמיד תפתח שאלה שבמידה ותענו עליה נכון הריכוז של התלמידה ייהיה כל כולו שלכם, לכל שאלה פתוחה יהיו לכם שלוש ניסיונות. בהצלחה!</p>
             </div>
             <button @click="gameOrInstruction">למשחק</button>
         </span>
         <img  src="@/assets/instructionIcon.png" v-if="!showInstruction" @click="gameOrInstruction" class="toInstruction">
         <span class="pupils">
-            <span class="row3" :style="numLogin===1 ? 'filter: grayscale(0.8);' : ''">
+            <span class="row3" :style="numberTrueAnswer > 6 ? '' : 'filter: grayscale(0.7);'" :class="numberTrueAnswer > 6 ? '' : 'rowDone'">
                 <img @click="goQuestion(index+7)" :key="index" v-for="(value, index) in imgRow3" :src="value" :id="'student' + index"  class="pupil" />
             </span>
-            <span class=" row2">
+            <span class=" row2" :style="numberTrueAnswer < 4 ? 'filter: grayscale(0.7);' : ''" :class="(numberTrueAnswer > 6)|| (numberTrueAnswer < 3)  ? ' rowDone' : ''">
                 <img  @click="goQuestion(index+4)" :key="index" v-for="(value, index) in imgRow2" :src="value" :id="'student' + index"  class="pupil" />
             </span>
-            <span class="row1">
+            <span class="row1" :class="numberTrueAnswer > 3 ? ' rowDone' : ''">
                 <img  @click="goQuestion(index)" :key="index" v-for="(value, index) in imgRow1" :src="value" :id="'student' + index"  class="pupil" />
             </span>
         </span>
@@ -36,7 +36,6 @@
             <p v-show="!isTrueAnswer && numTry === 2">התשובה הנכונה היא: {{open1[numOuestionOpen].trueAnswer}}</p>
         </div>
     </div>
-    <!-- <button @click="nextPage()">המשך</button>-->
 </template>
 
 <script>
@@ -125,7 +124,8 @@ export default {
         this.numOuestionClose +=4;
         this.numberTrueAnswer +=6;
         this.arrSuccesses = this.successes;
-
+        this.imgRow1 = ["/darkBrownGoodStude.png","/blondGoodStude.png","/blackGoodStude.png","/darkBrownGoodStude.png"];
+        this.imgRow2 = ["/blackGoodStude.png","/brownGoodStude.png","/nail.png",];
     }
   },
 
@@ -133,6 +133,7 @@ export default {
     gameOrInstruction() {
         this.showInstruction = !this.showInstruction;
     },
+
     goQuestion(x) {
         console.log(x);
         if ((this.numLogin === 1 && x < 6) || (this.numLogin === 2 && x > 5)){
@@ -149,6 +150,16 @@ export default {
             }
         }
     },
+
+    // goQuestion(x) {
+    //     if ((this.numLogin === 1 && x < 6) || (this.numLogin === 2 && x > 5)){
+    //         this.numberAnswer = x;
+    //         if(this.showQuestion === false){
+    //             this.numOuestion +=1;
+    //             this.showQuestion = true;
+    //         }
+    //     }
+    // },
 
     checkAnswer(number) {
         if(number===4){
@@ -229,6 +240,10 @@ export default {
 
 
 <style scoped>
+.rowDone {
+    pointer-events: none;
+}
+
 #game {
     background-image: url("@/assets/media/class2.png");
   background-size: cover;

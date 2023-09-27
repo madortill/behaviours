@@ -2,7 +2,7 @@
   <div id="animationType">
     <span class="typewriter">
       <h1 :style="lineLenght">{{ arr[numText] }}</h1>
-      <button @click="startLearn()" > למד אותי </button>
+      <button :disabled="start" @click="startLearn()" > למד אותי </button>
     </span>
   </div>
 </template>
@@ -13,8 +13,14 @@ export default {
   name: "animationType",
   data() {
     return {
-        arr: ["סוגי ההתנהגות של הלומדים,נלמד באמצעות משחק הזיכרון ", "תגובות אפשריות של המדריך", "עקרונות לבחירה ושימוש בתגובה"]
+        arr: ["סוגי ההתנהגות של הלומדים,נלמד באמצעות משחק הזיכרון ", "תגובות אפשריות של המדריך", "עקרונות לבחירה ושימוש בתגובה"],
+        start: true
     }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.start = false;
+    }, 5000);
   },
   methods: {
     startLearn() {
