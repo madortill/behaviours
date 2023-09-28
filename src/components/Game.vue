@@ -18,22 +18,27 @@
                 <img  @click="goQuestion(index)" :key="index" v-for="(value, index) in imgRow1" :src="value" :id="'student' + index"  class="pupil" />
             </span>
         </span>
+        <!-- <img src="@/assets/media/noteBg.png" class="question" v-if="showQuestion && arr[numOuestion] === 1"> -->
         <div class="question" v-if="showQuestion && arr[numOuestion] === 1">
-            <ul> {{close1[numOuestionClose].question}}
-                <li @click="checkAnswer(1)">{{close1[numOuestionClose].answer1}}</li>
-                <li @click="checkAnswer(2)">{{close1[numOuestionClose].answer2}}</li>
-                <li @click="checkAnswer(3)">{{close1[numOuestionClose].answer3}}</li>
-            </ul>
-            <p v-show="isTrueAnswer">כל הכבוד, תשובה נכונה</p>
-            <p v-show="!isTrueAnswer && numTry > 0">נסה שוב</p>
+            <div class="theQuestion">
+                <ul> {{close1[numOuestionClose].question}} </ul>
+                    <li @click="checkAnswer(1)">{{close1[numOuestionClose].answer1}}</li>
+                    <li @click="checkAnswer(2)">{{close1[numOuestionClose].answer2}}</li>
+                    <li @click="checkAnswer(3)">{{close1[numOuestionClose].answer3}}</li>
+                <p v-show="isTrueAnswer">כל הכבוד, תשובה נכונה</p>
+                <p v-show="!isTrueAnswer && numTry%2 !== 0">נסה שוב</p>
+                <p v-show="!isTrueAnswer && (numTry%2 === 0 && numTry > 0)"> אולי עוד פעם</p>
+            </div>
         </div>
         <div class="question" v-if="showQuestion && arr[numOuestion] === 2">
-            <p>{{open1[numOuestionOpen].question}}</p>
-            <input v-if="showQuestion" type="" v-model="answer">
-            <button  @click="checkAnswer(4)">בדוק אותי</button>
-            <p v-show="isTrueAnswer">כל הכבוד, תשובה נכונה</p>
-            <p v-show="!isTrueAnswer && numTry === 1">נסה שוב</p>
-            <p v-show="!isTrueAnswer && numTry === 2">התשובה הנכונה היא: {{open1[numOuestionOpen].trueAnswer}}</p>
+            <div class="theQuestion">
+                <p id="openOuestion">{{open1[numOuestionOpen].question}}</p>
+                <input v-if="showQuestion" type="" v-model="answer">
+                <button id="checkBtn" @click="checkAnswer(4)">בדוק אותי</button>
+                <p v-show="isTrueAnswer">כל הכבוד, תשובה נכונה</p>
+                <p v-show="!isTrueAnswer && numTry === 1">נסה שוב</p>
+                <p v-show="!isTrueAnswer && numTry === 2">התשובה הנכונה היא: {{open1[numOuestionOpen].trueAnswer}}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -151,16 +156,6 @@ export default {
         }
     },
 
-    // goQuestion(x) {
-    //     if ((this.numLogin === 1 && x < 6) || (this.numLogin === 2 && x > 5)){
-    //         this.numberAnswer = x;
-    //         if(this.showQuestion === false){
-    //             this.numOuestion +=1;
-    //             this.showQuestion = true;
-    //         }
-    //     }
-    // },
-
     checkAnswer(number) {
         if(number===4){
             if(this.answer === this.open1[this.numOuestionOpen].trueAnswer) {
@@ -240,6 +235,18 @@ export default {
 
 
 <style scoped>
+
+#openOuestion{
+    width: 40vw;
+    position: relative;
+    /* top: 2vh; */
+}
+
+#checkBtn {
+    position: relative;
+    top: -15vh;
+    right: 15vw;
+}
 .rowDone {
     pointer-events: none;
 }
@@ -287,7 +294,8 @@ font-size: 3vh;
     margin-top: 25vh;
     width: 40vw;
     height: 20vw;
-    background-color: black;
+    background-image: url("@/assets/media/noteBg.svg");
+  background-size: cover;
     margin-bottom: -88vh;
     margin-left: 25vw;
     border-radius: 5%;
@@ -297,12 +305,31 @@ font-size: 3vh;
     font-size: 1.5vh;
 }
 
+.theQuestion {
+    width: 35vw;
+    height: 15vw;
+    color: black;
+    font-size: 1.2rem;
+    position: relative;
+    top: 2vh;
+    right: 2vw;
+}
+
+ul {
+    width: 33vw;
+    position: relative;
+    top: 2vh;
+}
+
 li {
     border-radius: 10%;
-    border-width: 1vh;
-    border-color: aliceblue;
-    width: 35%;
+    /* border-width: 1vh;
+    border-color: aliceblue; */
+    /* width: 35%; */
     margin-top: 5%;
+    border: 1px, solid, white;
+    cursor: pointer;
+    
 }
 
 .pupil {

@@ -13,14 +13,14 @@ export default {
   name: "animationType",
   data() {
     return {
-        arr: ["סוגי ההתנהגות של הלומדים,נלמד באמצעות משחק הזיכרון ", "תגובות אפשריות של המדריך", "עקרונות לבחירה ושימוש בתגובה"],
+        arr: ["סוגי ההתנהגויות של הלומדים ", "תגובות אפשריות של המדריך", "עקרונות לבחירה ושימוש בתגובה"],
         start: true
     }
   },
   mounted () {
     setTimeout(() => {
       this.start = false;
-    }, 5000);
+    }, 3500);
   },
   methods: {
     startLearn() {
@@ -31,7 +31,7 @@ export default {
     lineLenght() {
       if(this.numText === 0) {
         return {
-          "width" : "43vw"
+          "width" : "22vw"
         }
       }
       else if(this.numText === 1) {
@@ -60,7 +60,7 @@ export default {
   width: 43vw;
   animation: 
     typing 3.5s steps(30, end),
-    blink-caret .5s step-end infinite;
+    blink-caret .3.5s step-end infinite;
 }
 
 .typewriter {

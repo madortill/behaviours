@@ -45,7 +45,8 @@
     flex-direction: column;
     justify-content: center;
     position: absolute;
-    left: 20vw;
+    top: 76vh;
+    left: 25vw;
   }
 
   #paper2{
@@ -60,6 +61,7 @@
     justify-content: center;
     position: absolute;
     left: 45vw;
+    top: 76vh;
   }
 
   #paper3{
@@ -73,7 +75,8 @@
     flex-direction: column;
     justify-content: center;
     position: absolute;
-    left: 70vw;
+    left: 65vw;
+    top: 75vh;
   }
   
   span {

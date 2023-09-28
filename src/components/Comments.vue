@@ -115,7 +115,7 @@
 .next {
   display: block;
   margin: 0 auto;
-  margin-top: 2vh;
+  margin-top: 13vh;
 }
 
 .container {
