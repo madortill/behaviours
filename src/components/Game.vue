@@ -104,9 +104,9 @@ export default {
                 answer3:"החלטיות" 
             }
         ],
-        imgRow3: ["/music.png","/sleep.png","/phone.png"],
-        imgRow2: ["/book2.png","/phone.png","/nail.png",],
-        imgRow1:["/shout.png","/talk.png","/book.png","/music2.png"],
+        imgRow3: ["./music.png","./sleep.png","./phone.png"],
+        imgRow2: ["./book2.png","./phone.png","./nail.png",],
+        imgRow1:["./shout.png","./talk.png","./book.png","./music2.png"],
         imgGoodStud:["/darkBrownGoodStude.png","/blondGoodStude.png","/blackGoodStude.png","/darkBrownGoodStude.png","/blackGoodStude.png","/brownGoodStude.png","/redGoodStude.png","/darkBrownGoodStude.png","/blondGoodStude.png","/brownGoodStude.png"],
         answer: "",
         arr: [1,1,2,1,2,1,1,2,1,2],
