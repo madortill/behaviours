@@ -1,5 +1,7 @@
 <template>
     <div :id="numPage===1 ? 'app' : 'done'">
+      <img class="logo" src="@/assets/logoTill.png">
+      <about></about>
       <navbar  v-if="numPage > 1 && numPage !== 4 && numPage !== 6" id="navbar" @goToPage="changePage" :navbarArr="navbarArr"></navbar>
       <span v-if="numPage === 1">
         <div v-if="!start" class="black"></div>
@@ -20,8 +22,9 @@ import TypeBehavior from './components/TypeBehavior.vue'
 import HowToUse from './components/HowToUse.vue'
 import Comments from './components/Comments.vue'
 import Game from './components/Game.vue'
+import About from './components/About.vue'
 export default {
-  components: {TypeBehavior, HowToUse, Comments, Game, Notebook, Navbar},
+  components: {TypeBehavior, HowToUse, Comments, Game, Notebook, Navbar, About},
   data() {
     return {
       start: false,
@@ -123,6 +126,14 @@ button{
   border-radius: 5%;
   margin-top: 45%;
   margin-left: 45%;
+}
+
+.logo {
+  width:5vw;
+  height: 6vh;
+  position: fixed;
+  margin-top: 1vh;
+  margin-left: 1vh;
 }
 
 </style>

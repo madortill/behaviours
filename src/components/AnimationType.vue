@@ -13,14 +13,14 @@ export default {
   name: "animationType",
   data() {
     return {
-        arr: ["סוגי ההתנהגויות של הלומדים ", "תגובות אפשריות של המדריך", "עקרונות לבחירה ושימוש בתגובה"],
+        arr: ["סוגי ההתנהגות של הלומדים,נלמד באמצעות משחק הזיכרון ", "תגובות אפשריות של המדריך, נלמד באמצעות דפדוף בכרטיסיות", "עקרונות לבחירה ושימוש בתגובה"],
         start: true
     }
   },
   mounted () {
     setTimeout(() => {
       this.start = false;
-    }, 3500);
+    }, 5000);
   },
   methods: {
     startLearn() {
@@ -31,16 +31,16 @@ export default {
     lineLenght() {
       if(this.numText === 0) {
         return {
-          "width" : "22vw"
+          "width" : "60vw"
         }
       }
       else if(this.numText === 1) {
         return {
-          "width" : "20vw"
+          "width" : "65vw"
         }
       }
       return {
-        "width" : "30vw"
+        "width" : "35vw"
       }
     },
   }
@@ -48,19 +48,25 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: handFont;
+  src: url(../assets/miriwin-webfont.ttf);
+}
+
 .typewriter h1 {
+  font-size: 2.5vh;
+  text-align: center;
   direction: rtl;
   color: black;
-  font-family: monospace;
+  font-family: handFont;
   overflow: hidden; 
   border-left: .15em solid; 
   white-space: nowrap; 
   margin: 0 auto;
   letter-spacing: .15em; 
-  width: 43vw;
   animation: 
     typing 3.5s steps(30, end),
-    blink-caret .3.5s step-end infinite;
+    blink-caret .5s step-end infinite;
 }
 
 .typewriter {

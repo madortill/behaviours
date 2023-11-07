@@ -88,14 +88,6 @@ export default {
       }
       return arr;
     },
-    // isPressed() {
-    //   this.pressed = !this.pressed;
-    //   if(this.pressed){
-    //     return {
-    //       "border": "3px solid white"
-    //     }
-    //   }
-    // }
   },
 }
 </script>
@@ -117,11 +109,9 @@ export default {
 .next {
   display: block;
   position: absolute;
-  bottom: 2vh;
-  left: 50%;
+  bottom: 30vh;
+  left: 18%;
   transform: translateX(-50%);
-  /* margin: 0 auto;
-  margin-bottom: 2vh; */
 }
 
 .card {
@@ -165,127 +155,55 @@ export default {
 
 .couple1::before {
   content: "";
-  width: 104%;
-  height: 102%;
+  width: 98%;
+  height: 98%;
+  border: 8px solid rgb(136 211 239);
   border-radius: 8px;
-  background-image: linear-gradient(var(--rotate), #5ddcff, #4f71d6 43%, #564bf0);
   position: absolute;
   z-index: -1;
   top: -1%;
   left: -2%;
   animation: spin 2.5s linear infinite;
-}
-
-.couple1::after {
-  /* position: absolute;
-  content: "";
-  top: calc(var(--card-height) / 6);
-  left: 0;
-  right: 0;
-  z-index: -1;
-  height: 100%;
-  width: 100%;
-  margin: 0 auto;
-  transform: scale(0.8);
-  filter: blur(calc(var(--card-height) / 6));
-  background-image: linear-gradient(var(--rotate), #5ddcff, #4f71d6 43%, #564bf0);
-  opacity: 1;
-  transition: opacity .5s;
-  animation: spin 2.5s linear infinite; */
 }
 
 .couple2::before {
   content: "";
-  width: 104%;
-  height: 102%;
+  width: 98%;
+  height: 98%;
+  border: 8px solid rgb(193 130 193);
   border-radius: 8px;
-  background-image: linear-gradient(var(--rotate), #ffb3d1, #ff66a3 43%, #ff3385);
   position: absolute;
   z-index: -1;
   top: -1%;
   left: -2%;
   animation: spin 2.5s linear infinite;
 }
-
-/* .couple2::after {
-  position: absolute;
-  content: "";
-  top: calc(var(--card-height) / 6);
-  left: 0;
-  right: 0;
-  z-index: -1;
-  height: 100%;
-  width: 100%;
-  margin: 0 auto;
-  transform: scale(0.8);
-  filter: blur(calc(var(--card-height) / 6));
-  background-image: linear-gradient(var(--rotate), #ffb3d1, #ff66a3 43%, #ff3385);
-  opacity: 1;
-  transition: opacity .5s;
-  animation: spin 2.5s linear infinite;
-} */
 
 .couple3::before {
   content: "";
-  width: 104%;
-  height: 102%;
+  width: 98%;
+  height: 98%;
+  border: 8px solid rgb(235, 235, 132);
   border-radius: 8px;
-  background-image: linear-gradient(var(--rotate), #dda670, #da9146 43%, #a86b2d);
   position: absolute;
   z-index: -1;
   top: -1%;
   left: -2%;
   animation: spin 2.5s linear infinite;
 }
-
-/* .couple3::after {
-  position: absolute;
-  content: "";
-  top: calc(var(--card-height) / 6);
-  left: 0;
-  right: 0;
-  z-index: -1;
-  height: 100%;
-  width: 100%;
-  margin: 0 auto;
-  transform: scale(0.8);
-  filter: blur(calc(var(--card-height) / 6));
-  background-image: linear-gradient(var(--rotate), #ffc299, #ff8533 43%, #ff6600);
-  opacity: 1;
-  transition: opacity .5s;
-  animation: spin 2.5s linear infinite;
-} */
 
 .couple0::before {
   content: "";
-  width: 104%;
-  height: 102%;
+  width: 98%;
+  height: 98%;
+  border: 8px solid pink;
   border-radius: 8px;
-  background-image: linear-gradient(var(--rotate), #dfcc78, #dac04f 43%, #ddb810);
   position: absolute;
   z-index: -1;
   top: -1%;
   left: -2%;
   animation: spin 2.5s linear infinite;
 }
-
-/* .couple0::after {
-  position: absolute;
-  content: "";
-  top: calc(var(--card-height) / 6);
-  left: 0;
-  right: 0;
-  z-index: -1;
-  height: 100%;
-  width: 100%;
-  margin: 0 auto;
-  transform: scale(0.8);
-  filter: blur(calc(var(--card-height) / 6));
-  background-image: linear-gradient(var(--rotate), #dfcc78, #dac04f 43%, #ddb810);
-  opacity: 1;
-  transition: opacity .5s;
-  animation: spin 2.5s linear infinite;
-} */
 
 .shake {
   animation: shake 1s;
@@ -323,31 +241,3 @@ export default {
   }
 }
 </style>
-
-@keyframes shake {
-  0% {
-    transform: scale(1);
-  }
-
-  30% {
-    transform: scale(1.35);
-  }
-  45% {
-    transform: scale(1.35) rotate(5deg);
-  }
-  60% {
-    transform: scale(1.35) rotate(-5deg);
-  }
-  70% {
-    transform: scale(1.35) rotate(2deg);
-  }
-  80% {
-    transform: scale(1.35) rotate(-5deg);
-  }
-  95% {
-    transform: scale(1.35) rotate(-2deg);
-  }
-  100% {
-    transform: scale(1.35);
-  }
-}

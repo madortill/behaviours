@@ -1,11 +1,11 @@
 <template>
     <div id="game">
-        <span v-if="showInstruction">
-            <div class="instruction">
+        <div class="instruction" v-if="showInstruction">
+            <div class="containerInstruction">
                 <p class="textInstruction">עם הידע שצברתם, אתם יודעים איך לרכז את התלמידים בכיתה. תוכלו לעשות זאת בלחיצה על כל תלמיד שתרצו לעזור לו, בלחיצה על התלמיד תפתח שאלה שבמידה ותענו עליה נכון הריכוז של התלמידה ייהיה כל כולו שלכם, לכל שאלה פתוחה יהיו לכם שלוש ניסיונות. בהצלחה!</p>
+                <button @click="gameOrInstruction">למשחק</button>
             </div>
-            <button @click="gameOrInstruction">למשחק</button>
-        </span>
+        </div>
         <img  src="@/assets/instructionIcon.png" v-if="!showInstruction" @click="gameOrInstruction" class="toInstruction">
         <span class="pupils">
             <span class="row3" :style="numberTrueAnswer > 6 ? '' : 'filter: grayscale(0.7);'" :class="numberTrueAnswer > 6 ? '' : 'rowDone'">
@@ -18,7 +18,6 @@
                 <img  @click="goQuestion(index)" :key="index" v-for="(value, index) in imgRow1" :src="value" :id="'student' + index"  class="pupil" />
             </span>
         </span>
-        <!-- <img src="@/assets/media/noteBg.png" class="question" v-if="showQuestion && arr[numOuestion] === 1"> -->
         <div class="question" v-if="showQuestion && arr[numOuestion] === 1">
             <div class="theQuestion">
                 <ul> {{close1[numOuestionClose].question}} </ul>
@@ -140,7 +139,6 @@ export default {
     },
 
     goQuestion(x) {
-        console.log(x);
         if ((this.numLogin === 1 && x < 6) || (this.numLogin === 2 && x > 5)){
             this.numberAnswer = x;
             let xInArr = false;
@@ -168,7 +166,6 @@ export default {
                     this.numOuestionOpen +=1;
                     this.answer = "";
                     this.numTry = 0;
-                    // console.log("gili");
                 }, 1500);
                 if(this.numberAnswer < 4) {
                     this.imgRow1[this.numberAnswer] = this.imgGoodStud[this.numberAnswer]
@@ -238,14 +235,6 @@ export default {
 
 #openOuestion{
     width: 40vw;
-    position: relative;
-    /* top: 2vh; */
-}
-
-#checkBtn {
-    position: relative;
-    top: -15vh;
-    right: 15vw;
 }
 .rowDone {
     pointer-events: none;
@@ -263,32 +252,38 @@ export default {
   z-index: -2;
 }
 
-button {
- margin-left: 45vw;
- margin-top: 20vh;
-
-}
 .textInstruction {
 width: 40vw;
-position: absolute;
 text-align: center;
 direction: rtl;
-margin-left: 25vw;
-margin-top: 20vh;
 font-size: 3vh;
 }
 .toInstruction{
     width: 3vw;
     height: 5vh;
-    margin-top: 2vh;
-    margin-left: 1.5vw;
+    margin-top: 1vh;
+    margin-left: 92vw;
 }
+
+.containerInstruction {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 50vh;
+    justify-content: flex-start;
+}
+
 .instruction {
     width: 100vw;
     height: 100vh;
     background-color: white;
     opacity: 90%;
     z-index: -1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 .question {
     margin-top: 25vh;
@@ -313,6 +308,11 @@ font-size: 3vh;
     position: relative;
     top: 2vh;
     right: 2vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 ul {
@@ -323,9 +323,6 @@ ul {
 
 li {
     border-radius: 10%;
-    /* border-width: 1vh;
-    border-color: aliceblue; */
-    /* width: 35%; */
     margin-top: 5%;
     border: 1px, solid, white;
     cursor: pointer;
@@ -367,10 +364,5 @@ position: absolute;
     flex-wrap: wrap;
     justify-content: center;
     z-index: -1;
-}
-
-button {
-    position: absolute;
-    top: 25vh;
 }
 </style>

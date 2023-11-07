@@ -4,8 +4,9 @@
       <div v-if="showContent" class="container">
           <div id="stack" class="slider" >
               <div :key="slide.index" v-for="(slide, i) in slides" @click="moveSlide()" class="slide">
-                  <div :class="animation > 0 ? `slide__inner animation` : `slide__inner`" > {{slide.name}} 
-                      <div class="text"> {{slide.description}} </div>
+                  <div :class="animation > 0 ? `slide__inner animation` : `slide__inner`" >
+                    <div>{{slide.name}}</div> 
+                    <div class="text"> {{slide.description}} </div>
                     </div>
               </div>
           </div>
@@ -93,12 +94,10 @@
   
   <style scoped>
 .text {
-  position: absolute;
   text-align: center;
   direction: rtl;
   width: 13vw;
-  margin-right: 10%;
-  margin-top: 45%;
+  margin-top: 5%;
   font-size: 1vw;
 }
   
@@ -115,7 +114,7 @@
 .next {
   display: block;
   margin: 0 auto;
-  margin-top: 13vh;
+  margin-top: -14vh;
 }
 
 .container {
@@ -129,12 +128,13 @@
 
 .slider {
   width: 300px;
-  height: 450px;
+  height: 40vh;
   margin: 0 auto;
-  background-color: #ffd580;
+  background-color: #ffdf9e;
   border: 0.2vh solid #ffad33;
   display: flex;
-  position: relative;;
+  position: relative;
+  border-radius: 10%;
 }
 
 .slide {
@@ -142,18 +142,19 @@
   height: 100%;
   position: absolute;
   cursor: pointer;
-  background-color: #ffd580;
+  background-color: #ffdf9e;
   border: 0.2vh solid #ffad33;
   transition: transform 100ms ease-in-out;
   margin-left: 5%;
   margin-top: 5%;
+  border-radius: 10%;
   
  
 }
 
 
 .slide__inner {
-  background-color: #ffd580;
+  background-color: #ffdf9e;
   border: 0.2vh solid #ffad33;
   position: relative;
   width: 100%;
@@ -165,6 +166,12 @@
   text-align: center;
   direction: rtl;
   font-size: 1.5vw;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10%;
 }
 
 .animation{
