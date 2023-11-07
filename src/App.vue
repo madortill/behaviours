@@ -28,13 +28,13 @@ export default {
   data() {
     return {
       start: false,
-      numPage: 1,
+      numPage: 4,
       numLogin: 1,
       gameArr: [],
       navbarArr: [true, true, false, false, true, false],
-      imgRow3: ["/music.png","/sleep.png","/phone.png"],
-      imgRow2: ["/book2.png","/phone.png","/nail.png",],
-      imgRow1:["/shout.png","/talk.png","/book.png","/music2.png"],
+      imgRow3: ["./music.png","./sleep.png","./phone.png"],
+      imgRow2: ["./book2.png","./phone.png","./nail.png",],
+      imgRow1:["./shout.png","./talk.png","./book.png","./music2.png"],
     }
   },
   mounted () {

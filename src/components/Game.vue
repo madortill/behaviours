@@ -128,8 +128,8 @@ export default {
         this.numOuestionClose +=4;
         this.numberTrueAnswer +=6;
         this.arrSuccesses = this.successes;
-        this.imgRow1 = ["/darkBrownGoodStude.png","/blondGoodStude.png","/blackGoodStude.png","/darkBrownGoodStude.png"];
-        this.imgRow2 = ["/blackGoodStude.png","/brownGoodStude.png","/nail.png",];
+        this.imgRow1 = ["./darkBrownGoodStude.png","./blondGoodStude.png","./blackGoodStude.png","./darkBrownGoodStude.png"];
+        this.imgRow2 = ["./blackGoodStude.png","./brownGoodStude.png","./nail.png",];
     }
   },
 
