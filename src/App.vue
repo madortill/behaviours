@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       start: false,
-      numPage: 4,
+      numPage: 1,
       numLogin: 1,
       gameArr: [],
       navbarArr: [true, true, false, false, true, false],
