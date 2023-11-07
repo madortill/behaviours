@@ -1,6 +1,6 @@
 <template>
     <div :id="numPage===1 ? 'app' : 'done'">
-      <img class="logo" src="@/assets/logoTill.png">
+      <img class="logo" src="@/assets/logoTill.svg">
       <about></about>
       <navbar  v-if="numPage > 1 && numPage !== 4 && numPage !== 6" id="navbar" @goToPage="changePage" :navbarArr="navbarArr"></navbar>
       <span v-if="numPage === 1">
@@ -16,13 +16,13 @@
 </template>
 
 <script>
+import About from './components/About.vue'
 import Navbar from './components/Navbar.vue'
 import Notebook from './components/Notebook.vue'
 import TypeBehavior from './components/TypeBehavior.vue'
 import HowToUse from './components/HowToUse.vue'
 import Comments from './components/Comments.vue'
 import Game from './components/Game.vue'
-import About from './components/About.vue'
 export default {
   components: {TypeBehavior, HowToUse, Comments, Game, Notebook, Navbar, About},
   data() {
